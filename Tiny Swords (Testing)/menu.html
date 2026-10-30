@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tiny Swords — Menu</title>
+  <link rel="stylesheet" href="ui.css">
+  <link rel="stylesheet" href="menu.css">
+</head>
+<body>
+  <canvas id="bg"></canvas>
+  <div id="vignette"></div>
+
+  <main id="menu">
+    <header id="brand">
+      <div class="crest">
+        <span class="tiny">Tiny</span>
+        <span class="swords">Swords</span>
+      </div>
+      <div class="ts-ribbon red">OPEN WORLD</div>
+    </header>
+
+    <!-- MAIN -->
+    <section class="screen" id="screen-main">
+      <div class="ts-panel">
+        <button class="ts-btn blue" data-goto="screen-saves">PLAY</button>
+        <button class="ts-btn blue" data-goto="screen-settings">SETTINGS</button>
+        <button class="ts-btn red" id="quit-btn" type="button">QUIT</button>
+      </div>
+    </section>
+
+    <!-- SAVE SLOTS -->
+    <section class="screen hidden" id="screen-saves">
+      <div class="ts-panel wide">
+        <div class="ts-ribbon">SAVE FILES</div>
+        <div id="slots"></div>
+        <div class="row">
+          <label class="ts-btn small blue" for="import-file">IMPORT</label>
+          <input type="file" id="import-file" accept=".json" hidden>
+          <button class="ts-btn small red" data-goto="screen-main">BACK</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SETTINGS -->
+    <section class="screen hidden" id="screen-settings">
+      <div class="ts-panel wide paper">
+        <div class="ts-ribbon yellow">SETTINGS</div>
+
+        <div class="setting-row">
+          <span>Difficulty</span>
+          <div id="difficulty-buttons"></div>
+        </div>
+
+        <h3>Keybinds <small>— click a key, then press a new one</small></h3>
+        <div id="keybinds"></div>
+
+        <div class="row">
+          <button class="ts-btn small blue" id="reset-keys">RESET KEYS</button>
+          <button class="ts-btn small red" data-goto="screen-main">BACK</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="shared.js"></script>
+  <script src="terrain.js"></script>
+  <script src="menu.js"></script>
+</body>
+</html>

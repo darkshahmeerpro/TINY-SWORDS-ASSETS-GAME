@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tiny Swords</title>
+  <link rel="stylesheet" href="ui.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="game"></canvas>
+
+  <div id="loading">Loading the wilds…</div>
+
+  <section id="hud">
+    <div class="hp-bar">
+      <div class="hp-track"><span id="health-fill"></span></div>
+      <b id="health-text">100</b>
+    </div>
+    <div id="danger" class="ribbon-tag">SAFE MEADOWS</div>
+  </section>
+
+  <div id="message"></div>
+
+  <section id="pause" class="hidden">
+    <div class="ts-panel">
+      <div class="ts-ribbon">PAUSED</div>
+      <button id="resume" class="ts-btn blue">RESUME</button>
+      <button id="save-quit" class="ts-btn red">SAVE &amp; MENU</button>
+    </div>
+  </section>
+
+  <script src="shared.js"></script>
+  <script src="terrain.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Almendra:wght@700&family=Nunito:wght@700;800;900&display=swap');
+
+:root { font-family: Nunito, sans-serif; }
+* { box-sizing: border-box; }
+html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; }
+body { cursor: url('assets/ui/cursor.png') 10 6, auto; }
+
+/* Wooden table panel — 9-slice from the pack */
+.ts-panel {
+  border: 48px solid transparent;
+  border-image: url('assets/ui/panel-wood.png') 85 84 103 84 fill stretch;
+  padding: 8px 18px 28px;
+  color: #ffedc2;
+  text-align: center;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 12px 0 rgba(20, 40, 35, .35));
+}
+.ts-panel.paper {
+  border: 36px solid transparent;
+  border-image: url('assets/ui/panel-paper.png') 44 52 45 52 fill stretch;
+  color: #5d4520;
+  filter: drop-shadow(0 8px 0 rgba(20, 40, 35, .25));
+}
+.ts-panel h2 {
+  margin: 0 0 14px;
+  font: 700 30px Almendra, serif;
+  color: #ffedc2;
+  letter-spacing: 1px;
+  text-shadow: 0 3px 0 #3a2410;
+}
+.ts-panel.paper h2 {
+  color: #5d4520;
+  text-shadow: none;
+}
+
+/* Big blue / red buttons — 9-slice */
+.ts-btn {
+  display: block;
+  width: 240px;
+  margin: 12px auto;
+  padding: 16px 12px 20px;
+  border: 26px solid transparent;
+  font: 900 18px Nunito, sans-serif;
+  letter-spacing: 2px;
+  color: #fff;
+  text-shadow: 0 2px 2px rgba(20, 40, 50, .5);
+  background: none;
+  cursor: url('assets/ui/cursor.png') 10 6, pointer;
+  image-rendering: pixelated;
+  transition: filter .12s, transform .12s;
+}
+.ts-btn.blue { border-image: url('assets/ui/btn-blue.png') 47 45 47 45 fill stretch; }
+.ts-btn.blue:active { border-image: url('assets/ui/btn-blue-pressed.png') 36 50 49 50 fill stretch; transform: translateY(2px); }
+.ts-btn.red { border-image: url('assets/ui/btn-red.png') 47 45 47 45 fill stretch; }
+.ts-btn.red:active { border-image: url('assets/ui/btn-red-pressed.png') 36 50 49 50 fill stretch; transform: translateY(2px); }
+.ts-btn:hover { filter: brightness(1.1); }
+.ts-btn.small {
+  width: auto;
+  min-width: 70px;
+  padding: 8px 14px 12px;
+  font-size: 13px;
+  margin: 4px;
+  display: inline-block;
+  border-width: 18px;
+}
+
+/* Title ribbon banner */
+.ts-ribbon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 280px;
+  height: 72px;
+  padding: 0 70px 8px;
+  background: url('assets/ui/title-ribbon-teal.png') center / 100% 100% no-repeat;
+  image-rendering: pixelated;
+  font: 700 28px Almendra, serif;
+  color: #fff8dc;
+  letter-spacing: 2px;
+  text-shadow: 0 3px 0 #1a3d48;
+  filter: drop-shadow(0 6px 0 rgba(20, 40, 35, .3));
+}
+.ts-ribbon.red { background-image: url('assets/ui/title-ribbon-red.png'); text-shadow: 0 3px 0 #5a1c1c; }
+.ts-ribbon.yellow { background-image: url('assets/ui/title-ribbon-yellow.png'); color: #5a3a10; text-shadow: 0 2px 0 #ffe9a0; }
+
+.hidden { display: none !important; }

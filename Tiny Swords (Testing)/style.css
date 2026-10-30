@@ -1,0 +1,66 @@
+html, body { background: #47aca6; }
+#game { display: block; width: 100%; height: 100%; }
+
+#loading {
+  position: fixed; inset: 0; display: grid; place-items: center;
+  background: #123a30; color: #ffedb3;
+  font: 700 26px Almendra, serif; letter-spacing: 1px;
+  z-index: 40;
+}
+
+#hud {
+  position: fixed; top: 16px; left: 18px;
+  display: flex; align-items: center; gap: 14px;
+  pointer-events: none; z-index: 10;
+}
+.hp-bar {
+  position: relative;
+  width: 240px; height: 52px;
+  border: 20px solid transparent;
+  border-image: url('assets/ui/bar-base.png') 20 24 20 24 fill stretch;
+  image-rendering: pixelated;
+}
+.hp-track {
+  position: absolute; inset: -6px 0;
+  border-radius: 8px; overflow: hidden;
+}
+.hp-track span {
+  display: block; height: 100%; width: 100%;
+  background: linear-gradient(#f4766a, #c23a41 70%);
+  border-radius: 7px;
+  transition: width .2s;
+}
+.hp-bar b {
+  position: absolute; inset: -8px 0 0;
+  text-align: center; line-height: 20px;
+  color: #fff; font-size: 14px;
+  text-shadow: 0 2px 2px #571e24;
+}
+.ribbon-tag {
+  padding: 8px 20px 10px;
+  border: 16px solid transparent;
+  border-image: url('assets/ui/ribbon-blue.png') round;
+  border-image-slice: 40 60 40 60 fill;
+  border-image-source: url('assets/ui/ribbon-blue.png');
+  background: #2e5a70;
+  border-radius: 8px;
+  color: #ffeec4; font-size: 12px; font-weight: 900; letter-spacing: 2px;
+  text-shadow: 0 2px 2px #14313f;
+  box-shadow: 0 3px 0 #1c3d4d;
+  border-width: 0; border-image: none; /* ribbon sheet too complex; simple tag */
+}
+
+#message {
+  position: fixed; top: 20%; left: 50%; transform: translateX(-50%);
+  color: #fff2ae; font: 700 26px Almendra, serif;
+  text-shadow: 0 3px #1e402b, 0 0 12px #1e402b;
+  opacity: 0; transition: opacity .3s; pointer-events: none; z-index: 12;
+}
+#message.show { opacity: 1; }
+
+#pause {
+  position: fixed; inset: 0; display: grid; place-items: center;
+  background: rgba(9, 30, 24, .55); backdrop-filter: blur(2px);
+  z-index: 30;
+}
+#pause .ts-panel { width: 340px; }
