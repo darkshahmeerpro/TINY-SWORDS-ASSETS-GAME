@@ -1,0 +1,1379 @@
+[gd_scene load_steps=17 format=3 uid="uid://ca5gw1w58otpw"]
+
+[ext_resource type="Script" uid="uid://dde0di205u0nk" path="res://scripts/ui/settings_menu.gd" id="1_script"]
+[ext_resource type="FontFile" uid="uid://bsrjo35eum5ca" path="res://assets/fonts/PixelifySans.ttf" id="2_font"]
+[ext_resource type="TileSet" uid="uid://ce50phno1xre3" path="res://resources/ui/ui_tileset.tres" id="3_ui"]
+[ext_resource type="Texture2D" uid="uid://clwuxk05rqige" path="res://assets/terrain/Water_Background.png" id="3_water"]
+[ext_resource type="Texture2D" uid="uid://5psqo76h1d00" path="res://assets/ui_pack/UI Elements/Icons/Icon_10.png" id="11_gear"]
+[ext_resource type="Texture2D" uid="uid://bq8gaf373s2w6" path="res://assets/ui/toggle_round_on.png" id="12_toggle_on"]
+[ext_resource type="Texture2D" uid="uid://825b8hvfalnv" path="res://assets/ui/toggle_round_off.png" id="13_toggle_off"]
+[ext_resource type="Texture2D" uid="uid://66sstha71u8t" path="res://assets/ui/scroll_track_v.png" id="15_scroll_track"]
+[ext_resource type="Texture2D" uid="uid://cv0lht5bc3tye" path="res://assets/ui/scroll_grabber_24.png" id="16_scroll_grab"]
+[ext_resource type="Texture2D" uid="uid://cednptsiiijf3" path="res://assets/ui/SmallBar_Track_9slice.png" id="17_smallbar"]
+[ext_resource type="Texture2D" uid="uid://bw18w3l5nn2q2" path="res://assets/ui/slider_grabber_28.png" id="18_grabber"]
+
+[sub_resource type="StyleBoxEmpty" id="Style_empty"]
+
+[sub_resource type="StyleBoxTexture" id="Style_scroll_grab"]
+content_margin_left = 4.0
+content_margin_top = 8.0
+content_margin_right = 4.0
+content_margin_bottom = 8.0
+texture = ExtResource("16_scroll_grab")
+texture_margin_left = 8.0
+texture_margin_top = 12.0
+texture_margin_right = 8.0
+texture_margin_bottom = 12.0
+
+[sub_resource type="StyleBoxTexture" id="Style_scroll"]
+content_margin_left = 4.0
+content_margin_top = 8.0
+content_margin_right = 4.0
+content_margin_bottom = 8.0
+texture = ExtResource("15_scroll_track")
+texture_margin_left = 6.0
+texture_margin_top = 14.0
+texture_margin_right = 6.0
+texture_margin_bottom = 14.0
+
+[sub_resource type="Theme" id="Theme_scroll"]
+VScrollBar/styles/grabber = SubResource("Style_scroll_grab")
+VScrollBar/styles/grabber_highlight = SubResource("Style_scroll_grab")
+VScrollBar/styles/grabber_pressed = SubResource("Style_scroll_grab")
+VScrollBar/styles/scroll = SubResource("Style_scroll")
+VScrollBar/styles/scroll_focus = SubResource("Style_scroll")
+
+[sub_resource type="StyleBoxFlat" id="Style_grab_hit"]
+content_margin_left = 18.0
+content_margin_top = 18.0
+content_margin_right = 18.0
+content_margin_bottom = 18.0
+bg_color = Color(0, 0, 0, 0)
+
+[node name="SettingsMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="WaterBackground" type="Sprite2D" parent="."]
+z_index = -10
+position = Vector2(-91.99997, -137.99997)
+scale = Vector2(33.8125, 22.796877)
+texture = ExtResource("3_water")
+centered = false
+
+[node name="Panel" type="TileMap" parent="."]
+unique_name_in_owner = true
+z_index = 1
+position = Vector2(384, 124)
+tile_set = ExtResource("3_ui")
+format = 2
+layer_0/name = "ui"
+layer_0/tile_data = PackedInt32Array(65538, 75, 0, 65539, 65611, 0, 65540, 196683, 0, 65541, 196683, 0, 65542, 196683, 0, 65543, 196683, 0, 65544, 196683, 0, 65545, 196683, 0, 65546, 196683, 0, 65547, 196683, 0, 65548, 196683, 0, 65549, 196683, 0, 65550, 327755, 0, 65551, 393291, 0, 131074, 75, 1, 131075, 65611, 1, 131076, 196683, 3, 131077, 196683, 3, 131078, 196683, 3, 131079, 196683, 3, 131080, 196683, 3, 131081, 196683, 3, 131082, 196683, 3, 131083, 196683, 3, 131084, 196683, 3, 131085, 196683, 3, 131086, 327755, 1, 131087, 393291, 1, 196610, 75, 3, 196611, 196683, 3, 196612, 196683, 3, 196613, 196683, 3, 196614, 196683, 3, 196615, 196683, 3, 196616, 196683, 3, 196617, 196683, 3, 196618, 196683, 3, 196619, 196683, 3, 196620, 196683, 3, 196621, 196683, 3, 196622, 196683, 3, 196623, 393291, 3, 262146, 75, 3, 262147, 196683, 3, 262148, 196683, 3, 262149, 196683, 3, 262150, 196683, 3, 262151, 196683, 3, 262152, 196683, 3, 262153, 196683, 3, 262154, 196683, 3, 262155, 196683, 3, 262156, 196683, 3, 262157, 196683, 3, 262158, 196683, 3, 262159, 393291, 3, 327682, 75, 3, 327683, 196683, 3, 327684, 196683, 3, 327685, 196683, 3, 327686, 196683, 3, 327687, 196683, 3, 327688, 196683, 3, 327689, 196683, 3, 327690, 196683, 3, 327691, 196683, 3, 327692, 196683, 3, 327693, 196683, 3, 327694, 196683, 3, 327695, 393291, 3, 393218, 75, 3, 393219, 196683, 3, 393220, 196683, 3, 393221, 196683, 3, 393222, 196683, 3, 393223, 196683, 3, 393224, 196683, 3, 393225, 196683, 3, 393226, 196683, 3, 393227, 196683, 3, 393228, 196683, 3, 393229, 196683, 3, 393230, 196683, 3, 393231, 393291, 3, 458754, 75, 3, 458755, 196683, 3, 458756, 196683, 3, 458757, 196683, 3, 458758, 196683, 3, 458759, 196683, 3, 458760, 196683, 3, 458761, 196683, 3, 458762, 196683, 3, 458763, 196683, 3, 458764, 196683, 3, 458765, 196683, 3, 458766, 196683, 3, 458767, 393291, 3, 524290, 75, 3, 524291, 196683, 3, 524292, 196683, 3, 524293, 196683, 3, 524294, 196683, 3, 524295, 196683, 3, 524296, 196683, 3, 524297, 196683, 3, 524298, 196683, 3, 524299, 196683, 3, 524300, 196683, 3, 524301, 196683, 3, 524302, 196683, 3, 524303, 393291, 3, 589826, 75, 3, 589827, 196683, 3, 589828, 196683, 3, 589829, 196683, 3, 589830, 196683, 3, 589831, 196683, 3, 589832, 196683, 3, 589833, 196683, 3, 589834, 196683, 3, 589835, 196683, 3, 589836, 196683, 3, 589837, 196683, 3, 589838, 196683, 3, 589839, 393291, 3, 655362, 75, 5, 655363, 65611, 5, 655364, 196683, 3, 655365, 196683, 3, 655366, 196683, 3, 655367, 196683, 3, 655368, 196683, 3, 655369, 196683, 3, 655370, 196683, 3, 655371, 196683, 3, 655372, 196683, 3, 655373, 196683, 3, 655374, 327755, 5, 655375, 393291, 5, 720898, 75, 6, 720899, 65611, 6, 720900, 196683, 6, 720901, 196683, 6, 720902, 196683, 6, 720903, 196683, 6, 720904, 196683, 6, 720905, 196683, 6, 720906, 196683, 6, 720907, 196683, 6, 720908, 196683, 6, 720909, 196683, 6, 720910, 327755, 6, 720911, 393291, 6)
+layer_1/name = "Button"
+layer_1/z_index = 2
+layer_1/tile_data = PackedInt32Array(131075, 16, 0, 196611, 16, 4, 131076, 131088, 0, 196612, 131088, 4, 131077, 131088, 0, 196613, 131088, 4, 131078, 262160, 0, 196614, 262160, 4, 131079, 16, 0, 196615, 16, 4, 131080, 131088, 0, 196616, 131088, 4, 131081, 131088, 0, 196617, 131088, 4, 131082, 262160, 0, 196618, 262160, 4, 131083, 16, 0, 196619, 16, 4, 131084, 131088, 0, 196620, 131088, 4, 131085, 131088, 0, 196621, 131088, 4, 131086, 262160, 0, 196622, 262160, 4, 655363, 74, 2, 720899, 74, 3, 655364, 65610, 2, 720900, 65610, 3, 655365, 196682, 2, 720901, 196682, 3, 655366, 196682, 2, 720902, 196682, 3, 655367, 327754, 2, 720903, 327754, 3, 655369, 393290, 1610612738, 720905, 393290, 1342177283, 655370, 327754, 268435458, 720906, 327754, 268435459, 655371, 196682, 2, 720907, 196682, 3, 655372, 196682, 2, 720908, 196682, 3, 655373, 65610, 268435458, 720909, 65610, 268435459, 720910, 74, 805306370, 655374, 74, 805306371, 65539, 73, 2, 65540, 131145, 2, 65541, 131145, 2, 65542, 131145, 2, 65543, 131145, 2, 65544, 131145, 2, 65545, 131145, 2, 65546, 131145, 2, 65547, 131145, 2, 65548, 131145, 2, 65549, 131145, 2, 65550, 262217, 2, 655368, 393290, 2, 720904, 393290, 3, 589830, 131079, 2, 589831, 7, 0, 589832, 7, 0, 589833, 7, 0, 589834, 7, 0, 589835, 7, 0, 589836, 7, 0)
+
+[node name="Overlay" type="Control" parent="."]
+unique_name_in_owner = true
+z_index = 10
+anchors_preset = 0
+offset_left = 384.0
+offset_top = 124.0
+offset_right = 1408.0
+offset_bottom = 892.0
+
+[node name="Title" type="Label" parent="Overlay"]
+layout_mode = 0
+offset_left = 237.0
+offset_top = 70.0
+offset_right = 941.0
+offset_bottom = 119.0
+theme_override_colors/font_color = Color(1, 0.94, 0.82, 1)
+theme_override_colors/font_outline_color = Color(0.18, 0.08, 0.05, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 40
+text = "Settings"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Settings_icon" type="Sprite2D" parent="Overlay/Title"]
+z_index = 999
+position = Vector2(230, 24)
+texture = ExtResource("11_gear")
+
+[node name="TabGraphics" type="Button" parent="Overlay"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 192.0
+offset_top = 128.0
+offset_right = 448.0
+offset_bottom = 256.0
+focus_mode = 0
+theme_override_colors/font_color = Color(1, 0.94, 0.82, 1)
+theme_override_colors/font_outline_color = Color(0.18, 0.08, 0.05, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 26
+theme_override_styles/normal = SubResource("Style_empty")
+theme_override_styles/pressed = SubResource("Style_empty")
+theme_override_styles/hover = SubResource("Style_empty")
+theme_override_styles/disabled = SubResource("Style_empty")
+theme_override_styles/focus = SubResource("Style_empty")
+text = "Graphics"
+flat = true
+
+[node name="TabControls" type="Button" parent="Overlay"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 448.0
+offset_top = 128.0
+offset_right = 704.0
+offset_bottom = 256.0
+focus_mode = 0
+theme_override_colors/font_color = Color(1, 0.94, 0.82, 1)
+theme_override_colors/font_outline_color = Color(0.18, 0.08, 0.05, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 26
+theme_override_styles/normal = SubResource("Style_empty")
+theme_override_styles/pressed = SubResource("Style_empty")
+theme_override_styles/hover = SubResource("Style_empty")
+theme_override_styles/disabled = SubResource("Style_empty")
+theme_override_styles/focus = SubResource("Style_empty")
+text = "Controls"
+flat = true
+
+[node name="TabAccessibility" type="Button" parent="Overlay"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 704.0
+offset_top = 128.0
+offset_right = 960.0
+offset_bottom = 256.0
+focus_mode = 0
+theme_override_colors/font_color = Color(1, 0.94, 0.82, 1)
+theme_override_colors/font_outline_color = Color(0.18, 0.08, 0.05, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("Style_empty")
+theme_override_styles/pressed = SubResource("Style_empty")
+theme_override_styles/hover = SubResource("Style_empty")
+theme_override_styles/disabled = SubResource("Style_empty")
+theme_override_styles/focus = SubResource("Style_empty")
+text = "Access"
+flat = true
+
+[node name="GraphicsPage" type="ScrollContainer" parent="Overlay"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 208.0
+offset_top = 268.0
+offset_right = 920.0
+offset_bottom = 620.0
+theme = SubResource("Theme_scroll")
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
+
+[node name="List" type="VBoxContainer" parent="Overlay/GraphicsPage"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="SecDisplay" type="Label" parent="Overlay/GraphicsPage/List"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.94, 0.82, 1)
+theme_override_colors/font_outline_color = Color(0.18, 0.08, 0.05, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 26
+text = "Display"
+
+[node name="RowDisplayMode" type="HBoxContainer" parent="Overlay/GraphicsPage/List"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Label" type="Label" parent="Overlay/GraphicsPage/List/RowDisplayMode"]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.9, 0.8, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 20
+text = "Display Mode"
+vertical_alignment = 1
+
+[node name="DisplayModeTrack" type="Control" parent="Overlay/GraphicsPage/List/RowDisplayMode"]
+custom_minimum_size = Vector2(320, 48)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 2
+
+[node name="BarTiles" type="NinePatchRect" parent="Overlay/GraphicsPage/List/RowDisplayMode/DisplayModeTrack"]
+show_behind_parent = true
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("17_smallbar")
+patch_margin_left = 15
+patch_margin_top = 8
+patch_margin_right = 15
+patch_margin_bottom = 8
+axis_stretch_horizontal = 1
+
+[node name="DisplayMode" type="OptionButton" parent="Overlay/GraphicsPage/List/RowDisplayMode/DisplayModeTrack"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 9.0
+offset_top = 14.0
+offset_right = -9.0
+offset_bottom = -11.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.94, 0.82, 1)
+theme_override_colors/font_outline_color = Color(0.18, 0.08, 0.05, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("Style_empty")
+theme_override_styles/pressed = SubResource("Style_empty")
+theme_override_styles/hover = SubResource("Style_empty")
+theme_override_styles/disabled = SubResource("Style_empty")
+theme_override_styles/focus = SubResource("Style_empty")
+flat = true
+alignment = 1
+item_count = 3
+popup/item_0/text = "Windowed"
+popup/item_0/id = 0
+popup/item_1/text = "Borderless"
+popup/item_1/id = 1
+popup/item_2/text = "Fullscreen"
+popup/item_2/id = 2
+
+[node name="RowResolution" type="HBoxContainer" parent="Overlay/GraphicsPage/List"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Label" type="Label" parent="Overlay/GraphicsPage/List/RowResolution"]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.9, 0.8, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 20
+text = "Resolution"
+vertical_alignment = 1
+
+[node name="ResolutionTrack" type="Control" parent="Overlay/GraphicsPage/List/RowResolution"]
+custom_minimum_size = Vector2(320, 48)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 2
+
+[node name="BarTiles" type="NinePatchRect" parent="Overlay/GraphicsPage/List/RowResolution/ResolutionTrack"]
+show_behind_parent = true
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("17_smallbar")
+patch_margin_left = 15
+patch_margin_top = 8
+patch_margin_right = 15
+patch_margin_bottom = 8
+axis_stretch_horizontal = 1
+
+[node name="Resolution" type="OptionButton" parent="Overlay/GraphicsPage/List/RowResolution/ResolutionTrack"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 13.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.94, 0.82, 1)
+theme_override_colors/font_outline_color = Color(0.18, 0.08, 0.05, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("Style_empty")
+theme_override_styles/pressed = SubResource("Style_empty")
+theme_override_styles/hover = SubResource("Style_empty")
+theme_override_styles/disabled = SubResource("Style_empty")
+theme_override_styles/focus = SubResource("Style_empty")
+flat = true
+alignment = 1
+
+[node name="RowVsync" type="HBoxContainer" parent="Overlay/GraphicsPage/List"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Overlay/GraphicsPage/List/RowVsync"]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.9, 0.8, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 20
+text = "VSync"
+vertical_alignment = 1
+
+[node name="Vsync" type="CheckBox" parent="Overlay/GraphicsPage/List/RowVsync"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_vertical = 4
+focus_mode = 0
+theme_override_constants/icon_max_width = 36
+theme_override_styles/normal = SubResource("Style_empty")
+theme_override_styles/pressed = SubResource("Style_empty")
+theme_override_styles/hover = SubResource("Style_empty")
+theme_override_styles/disabled = SubResource("Style_empty")
+theme_override_styles/focus = SubResource("Style_empty")
+theme_override_icons/checked = ExtResource("12_toggle_on")
+theme_override_icons/unchecked = ExtResource("13_toggle_off")
+theme_override_icons/checked_disabled = ExtResource("13_toggle_off")
+theme_override_icons/unchecked_disabled = ExtResource("13_toggle_off")
+flat = true
+
+[node name="RowFps" type="HBoxContainer" parent="Overlay/GraphicsPage/List"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Label" type="Label" parent="Overlay/GraphicsPage/List/RowFps"]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.9, 0.8, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 20
+text = "FPS Cap"
+vertical_alignment = 1
+
+[node name="FpsCapTrack" type="Control" parent="Overlay/GraphicsPage/List/RowFps"]
+custom_minimum_size = Vector2(320, 48)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 2
+
+[node name="BarTiles" type="NinePatchRect" parent="Overlay/GraphicsPage/List/RowFps/FpsCapTrack"]
+show_behind_parent = true
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("17_smallbar")
+patch_margin_left = 15
+patch_margin_top = 8
+patch_margin_right = 15
+patch_margin_bottom = 8
+axis_stretch_horizontal = 1
+
+[node name="FpsCap" type="OptionButton" parent="Overlay/GraphicsPage/List/RowFps/FpsCapTrack"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 9.0
+offset_top = 12.0
+offset_right = -9.0
+offset_bottom = -9.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.94, 0.82, 1)
+theme_override_colors/font_outline_color = Color(0.18, 0.08, 0.05, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("Style_empty")
+theme_override_styles/pressed = SubResource("Style_empty")
+theme_override_styles/hover = SubResource("Style_empty")
+theme_override_styles/disabled = SubResource("Style_empty")
+theme_override_styles/focus = SubResource("Style_empty")
+flat = true
+alignment = 1
+item_count = 5
+popup/item_0/text = "Unlimited"
+popup/item_0/id = 0
+popup/item_1/text = "30"
+popup/item_1/id = 1
+popup/item_2/text = "60"
+popup/item_2/id = 2
+popup/item_3/text = "120"
+popup/item_3/id = 3
+popup/item_4/text = "144"
+popup/item_4/id = 4
+
+[node name="SecQuality" type="Label" parent="Overlay/GraphicsPage/List"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.94, 0.82, 1)
+theme_override_colors/font_outline_color = Color(0.18, 0.08, 0.05, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 26
+text = "Quality"
+
+[node name="RowQuality" type="HBoxContainer" parent="Overlay/GraphicsPage/List"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Label" type="Label" parent="Overlay/GraphicsPage/List/RowQuality"]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.9, 0.8, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 20
+text = "Quality"
+vertical_alignment = 1
+
+[node name="QualityTrack" type="Control" parent="Overlay/GraphicsPage/List/RowQuality"]
+custom_minimum_size = Vector2(320, 48)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 2
+
+[node name="BarTiles" type="NinePatchRect" parent="Overlay/GraphicsPage/List/RowQuality/QualityTrack"]
+show_behind_parent = true
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("17_smallbar")
+patch_margin_left = 15
+patch_margin_top = 8
+patch_margin_right = 15
+patch_margin_bottom = 8
+axis_stretch_horizontal = 1
+
+[node name="Quality" type="OptionButton" parent="Overlay/GraphicsPage/List/RowQuality/QualityTrack"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 11.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.94, 0.82, 1)
+theme_override_colors/font_outline_color = Color(0.18, 0.08, 0.05, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("Style_empty")
+theme_override_styles/pressed = SubResource("Style_empty")
+theme_override_styles/hover = SubResource("Style_empty")
+theme_override_styles/disabled = SubResource("Style_empty")
+theme_override_styles/focus = SubResource("Style_empty")
+flat = true
+alignment = 1
+item_count = 3
+popup/item_0/text = "Low"
+popup/item_0/id = 0
+popup/item_1/text = "Medium"
+popup/item_1/id = 1
+popup/item_2/text = "High"
+popup/item_2/id = 2
+
+[node name="RowFov" type="HBoxContainer" parent="Overlay/GraphicsPage/List"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Label" type="Label" parent="Overlay/GraphicsPage/List/RowFov"]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.9, 0.8, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 20
+text = "FOV"
+vertical_alignment = 1
+
+[node name="FovTrack" type="Control" parent="Overlay/GraphicsPage/List/RowFov"]
+custom_minimum_size = Vector2(320, 48)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 2
+
+[node name="Track" type="NinePatchRect" parent="Overlay/GraphicsPage/List/RowFov/FovTrack"]
+show_behind_parent = true
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("17_smallbar")
+patch_margin_left = 15
+patch_margin_top = 8
+patch_margin_right = 15
+patch_margin_bottom = 8
+axis_stretch_horizontal = 1
+
+[node name="Fov" type="HSlider" parent="Overlay/GraphicsPage/List/RowFov/FovTrack"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_right = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme_override_icons/grabber = ExtResource("18_grabber")
+theme_override_icons/grabber_highlight = ExtResource("18_grabber")
+theme_override_icons/grabber_disabled = ExtResource("18_grabber")
+theme_override_styles/slider = SubResource("Style_empty")
+theme_override_styles/grabber_area = SubResource("Style_grab_hit")
+theme_override_styles/grabber_area_highlight = SubResource("Style_grab_hit")
+min_value = 50.0
+max_value = 110.0
+value = 70.0
+scrollable = false
+
+[node name="FovValue" type="Label" parent="Overlay/GraphicsPage/List/RowFov"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.94, 0.82, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 20
+text = "70°"
+vertical_alignment = 1
+
+[node name="RowMotionBlur" type="HBoxContainer" parent="Overlay/GraphicsPage/List"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Overlay/GraphicsPage/List/RowMotionBlur"]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.9, 0.8, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 20
+text = "Motion Blur"
+vertical_alignment = 1
+
+[node name="MotionBlur" type="CheckBox" parent="Overlay/GraphicsPage/List/RowMotionBlur"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_vertical = 4
+focus_mode = 0
+theme_override_constants/icon_max_width = 36
+theme_override_styles/normal = SubResource("Style_empty")
+theme_override_styles/pressed = SubResource("Style_empty")
+theme_override_styles/hover = SubResource("Style_empty")
+theme_override_styles/disabled = SubResource("Style_empty")
+theme_override_styles/focus = SubResource("Style_empty")
+theme_override_icons/checked = ExtResource("12_toggle_on")
+theme_override_icons/unchecked = ExtResource("13_toggle_off")
+theme_override_icons/checked_disabled = ExtResource("13_toggle_off")
+theme_override_icons/unchecked_disabled = ExtResource("13_toggle_off")
+flat = true
+
+[node name="ControlsPage" type="ScrollContainer" parent="Overlay"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 208.0
+offset_top = 268.0
+offset_right = 920.0
+offset_bottom = 620.0
+theme = SubResource("Theme_scroll")
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
+
+[node name="List" type="VBoxContainer" parent="Overlay/ControlsPage"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="SecSensitivity" type="Label" parent="Overlay/ControlsPage/List"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.94, 0.82, 1)
+theme_override_colors/font_outline_color = Color(0.18, 0.08, 0.05, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 26
+text = "Sensitivity"
+
+[node name="RowMouseSens" type="HBoxContainer" parent="Overlay/ControlsPage/List"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Label" type="Label" parent="Overlay/ControlsPage/List/RowMouseSens"]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.9, 0.8, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 20
+text = "Mouse Sensitivity"
+vertical_alignment = 1
+
+[node name="MouseSensTrack" type="Control" parent="Overlay/ControlsPage/List/RowMouseSens"]
+custom_minimum_size = Vector2(320, 48)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 2
+
+[node name="Track" type="NinePatchRect" parent="Overlay/ControlsPage/List/RowMouseSens/MouseSensTrack"]
+show_behind_parent = true
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("17_smallbar")
+patch_margin_left = 15
+patch_margin_top = 8
+patch_margin_right = 15
+patch_margin_bottom = 8
+axis_stretch_horizontal = 1
+
+[node name="MouseSens" type="HSlider" parent="Overlay/ControlsPage/List/RowMouseSens/MouseSensTrack"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_right = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme_override_icons/grabber = ExtResource("18_grabber")
+theme_override_icons/grabber_highlight = ExtResource("18_grabber")
+theme_override_icons/grabber_disabled = ExtResource("18_grabber")
+theme_override_styles/slider = SubResource("Style_empty")
+theme_override_styles/grabber_area = SubResource("Style_grab_hit")
+theme_override_styles/grabber_area_highlight = SubResource("Style_grab_hit")
+min_value = 10.0
+max_value = 200.0
+value = 100.0
+scrollable = false
+
+[node name="MouseSensValue" type="Label" parent="Overlay/ControlsPage/List/RowMouseSens"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.94, 0.82, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 20
+text = "100%"
+vertical_alignment = 1
+
+[node name="RowPadSens" type="HBoxContainer" parent="Overlay/ControlsPage/List"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Label" type="Label" parent="Overlay/ControlsPage/List/RowPadSens"]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.9, 0.8, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 20
+text = "Controller Sens"
+vertical_alignment = 1
+
+[node name="PadSensTrack" type="Control" parent="Overlay/ControlsPage/List/RowPadSens"]
+custom_minimum_size = Vector2(320, 48)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 2
+
+[node name="Track" type="NinePatchRect" parent="Overlay/ControlsPage/List/RowPadSens/PadSensTrack"]
+show_behind_parent = true
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("17_smallbar")
+patch_margin_left = 15
+patch_margin_top = 8
+patch_margin_right = 15
+patch_margin_bottom = 8
+axis_stretch_horizontal = 1
+
+[node name="PadSens" type="HSlider" parent="Overlay/ControlsPage/List/RowPadSens/PadSensTrack"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_right = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme_override_icons/grabber = ExtResource("18_grabber")
+theme_override_icons/grabber_highlight = ExtResource("18_grabber")
+theme_override_icons/grabber_disabled = ExtResource("18_grabber")
+theme_override_styles/slider = SubResource("Style_empty")
+theme_override_styles/grabber_area = SubResource("Style_grab_hit")
+theme_override_styles/grabber_area_highlight = SubResource("Style_grab_hit")
+min_value = 10.0
+max_value = 200.0
+value = 100.0
+scrollable = false
+
+[node name="PadSensValue" type="Label" parent="Overlay/ControlsPage/List/RowPadSens"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.94, 0.82, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 20
+text = "100%"
+vertical_alignment = 1
+
+[node name="SecAxes" type="Label" parent="Overlay/ControlsPage/List"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.94, 0.82, 1)
+theme_override_colors/font_outline_color = Color(0.18, 0.08, 0.05, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 26
+text = "Axes"
+
+[node name="RowInvertX" type="HBoxContainer" parent="Overlay/ControlsPage/List"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Overlay/ControlsPage/List/RowInvertX"]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.9, 0.8, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 20
+text = "Invert X"
+vertical_alignment = 1
+
+[node name="InvertX" type="CheckBox" parent="Overlay/ControlsPage/List/RowInvertX"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_vertical = 4
+focus_mode = 0
+theme_override_constants/icon_max_width = 36
+theme_override_styles/normal = SubResource("Style_empty")
+theme_override_styles/pressed = SubResource("Style_empty")
+theme_override_styles/hover = SubResource("Style_empty")
+theme_override_styles/disabled = SubResource("Style_empty")
+theme_override_styles/focus = SubResource("Style_empty")
+theme_override_icons/checked = ExtResource("12_toggle_on")
+theme_override_icons/unchecked = ExtResource("13_toggle_off")
+theme_override_icons/checked_disabled = ExtResource("13_toggle_off")
+theme_override_icons/unchecked_disabled = ExtResource("13_toggle_off")
+flat = true
+
+[node name="RowInvertY" type="HBoxContainer" parent="Overlay/ControlsPage/List"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Overlay/ControlsPage/List/RowInvertY"]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.9, 0.8, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 20
+text = "Invert Y"
+vertical_alignment = 1
+
+[node name="InvertY" type="CheckBox" parent="Overlay/ControlsPage/List/RowInvertY"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_vertical = 4
+focus_mode = 0
+theme_override_constants/icon_max_width = 36
+theme_override_styles/normal = SubResource("Style_empty")
+theme_override_styles/pressed = SubResource("Style_empty")
+theme_override_styles/hover = SubResource("Style_empty")
+theme_override_styles/disabled = SubResource("Style_empty")
+theme_override_styles/focus = SubResource("Style_empty")
+theme_override_icons/checked = ExtResource("12_toggle_on")
+theme_override_icons/unchecked = ExtResource("13_toggle_off")
+theme_override_icons/checked_disabled = ExtResource("13_toggle_off")
+theme_override_icons/unchecked_disabled = ExtResource("13_toggle_off")
+flat = true
+
+[node name="RowMouseAccel" type="HBoxContainer" parent="Overlay/ControlsPage/List"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Overlay/ControlsPage/List/RowMouseAccel"]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.9, 0.8, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 20
+text = "Mouse Acceleration"
+vertical_alignment = 1
+
+[node name="MouseAccel" type="CheckBox" parent="Overlay/ControlsPage/List/RowMouseAccel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_vertical = 4
+focus_mode = 0
+theme_override_constants/icon_max_width = 36
+theme_override_styles/normal = SubResource("Style_empty")
+theme_override_styles/pressed = SubResource("Style_empty")
+theme_override_styles/hover = SubResource("Style_empty")
+theme_override_styles/disabled = SubResource("Style_empty")
+theme_override_styles/focus = SubResource("Style_empty")
+theme_override_icons/checked = ExtResource("12_toggle_on")
+theme_override_icons/unchecked = ExtResource("13_toggle_off")
+theme_override_icons/checked_disabled = ExtResource("13_toggle_off")
+theme_override_icons/unchecked_disabled = ExtResource("13_toggle_off")
+flat = true
+
+[node name="SecBinds" type="Label" parent="Overlay/ControlsPage/List"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.94, 0.82, 1)
+theme_override_colors/font_outline_color = Color(0.18, 0.08, 0.05, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 26
+text = "Keybinds"
+
+[node name="BindHint" type="Label" parent="Overlay/ControlsPage/List"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.8, 0.7, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 16
+text = "Click a bind, then press a key. Esc cancels."
+
+[node name="RowBindLeft" type="HBoxContainer" parent="Overlay/ControlsPage/List"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Label" type="Label" parent="Overlay/ControlsPage/List/RowBindLeft"]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.9, 0.8, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 20
+text = "Move Left"
+vertical_alignment = 1
+
+[node name="BindMoveLeft" type="Button" parent="Overlay/ControlsPage/List/RowBindLeft"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(180, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 0.94, 0.82, 1)
+theme_override_colors/font_outline_color = Color(0.18, 0.08, 0.05, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 20
+text = "-"
+
+[node name="RowBindRight" type="HBoxContainer" parent="Overlay/ControlsPage/List"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Label" type="Label" parent="Overlay/ControlsPage/List/RowBindRight"]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.9, 0.8, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 20
+text = "Move Right"
+vertical_alignment = 1
+
+[node name="BindMoveRight" type="Button" parent="Overlay/ControlsPage/List/RowBindRight"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(180, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 0.94, 0.82, 1)
+theme_override_colors/font_outline_color = Color(0.18, 0.08, 0.05, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 20
+text = "-"
+
+[node name="RowBindUp" type="HBoxContainer" parent="Overlay/ControlsPage/List"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Label" type="Label" parent="Overlay/ControlsPage/List/RowBindUp"]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.9, 0.8, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 20
+text = "Move Up"
+vertical_alignment = 1
+
+[node name="BindMoveUp" type="Button" parent="Overlay/ControlsPage/List/RowBindUp"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(180, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 0.94, 0.82, 1)
+theme_override_colors/font_outline_color = Color(0.18, 0.08, 0.05, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 20
+text = "-"
+
+[node name="RowBindDown" type="HBoxContainer" parent="Overlay/ControlsPage/List"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Label" type="Label" parent="Overlay/ControlsPage/List/RowBindDown"]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.9, 0.8, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 20
+text = "Move Down"
+vertical_alignment = 1
+
+[node name="BindMoveDown" type="Button" parent="Overlay/ControlsPage/List/RowBindDown"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(180, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 0.94, 0.82, 1)
+theme_override_colors/font_outline_color = Color(0.18, 0.08, 0.05, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 20
+text = "-"
+
+[node name="RowBindCancel" type="HBoxContainer" parent="Overlay/ControlsPage/List"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Label" type="Label" parent="Overlay/ControlsPage/List/RowBindCancel"]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.9, 0.8, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 20
+text = "Cancel / Menu"
+vertical_alignment = 1
+
+[node name="BindCancel" type="Button" parent="Overlay/ControlsPage/List/RowBindCancel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(180, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 0.94, 0.82, 1)
+theme_override_colors/font_outline_color = Color(0.18, 0.08, 0.05, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 20
+text = "-"
+
+[node name="AccessibilityPage" type="ScrollContainer" parent="Overlay"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 208.0
+offset_top = 268.0
+offset_right = 920.0
+offset_bottom = 620.0
+theme = SubResource("Theme_scroll")
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
+
+[node name="List" type="VBoxContainer" parent="Overlay/AccessibilityPage"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="SecText" type="Label" parent="Overlay/AccessibilityPage/List"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.94, 0.82, 1)
+theme_override_colors/font_outline_color = Color(0.18, 0.08, 0.05, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 26
+text = "Text"
+
+[node name="RowSubtitles" type="HBoxContainer" parent="Overlay/AccessibilityPage/List"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Overlay/AccessibilityPage/List/RowSubtitles"]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.9, 0.8, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 20
+text = "Subtitles"
+vertical_alignment = 1
+
+[node name="Subtitles" type="CheckBox" parent="Overlay/AccessibilityPage/List/RowSubtitles"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_vertical = 4
+focus_mode = 0
+theme_override_constants/icon_max_width = 36
+theme_override_styles/normal = SubResource("Style_empty")
+theme_override_styles/pressed = SubResource("Style_empty")
+theme_override_styles/hover = SubResource("Style_empty")
+theme_override_styles/disabled = SubResource("Style_empty")
+theme_override_styles/focus = SubResource("Style_empty")
+theme_override_icons/checked = ExtResource("12_toggle_on")
+theme_override_icons/unchecked = ExtResource("13_toggle_off")
+theme_override_icons/checked_disabled = ExtResource("13_toggle_off")
+theme_override_icons/unchecked_disabled = ExtResource("13_toggle_off")
+flat = true
+
+[node name="RowTextSize" type="HBoxContainer" parent="Overlay/AccessibilityPage/List"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Label" type="Label" parent="Overlay/AccessibilityPage/List/RowTextSize"]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.9, 0.8, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 20
+text = "Text Size"
+vertical_alignment = 1
+
+[node name="TextSizeTrack" type="Control" parent="Overlay/AccessibilityPage/List/RowTextSize"]
+custom_minimum_size = Vector2(320, 48)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 2
+
+[node name="BarTiles" type="NinePatchRect" parent="Overlay/AccessibilityPage/List/RowTextSize/TextSizeTrack"]
+show_behind_parent = true
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("17_smallbar")
+patch_margin_left = 15
+patch_margin_top = 8
+patch_margin_right = 15
+patch_margin_bottom = 8
+axis_stretch_horizontal = 1
+
+[node name="TextSize" type="OptionButton" parent="Overlay/AccessibilityPage/List/RowTextSize/TextSizeTrack"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 22.0
+offset_top = 4.0
+offset_right = -22.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.94, 0.82, 1)
+theme_override_colors/font_outline_color = Color(0.18, 0.08, 0.05, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("Style_empty")
+theme_override_styles/pressed = SubResource("Style_empty")
+theme_override_styles/hover = SubResource("Style_empty")
+theme_override_styles/disabled = SubResource("Style_empty")
+theme_override_styles/focus = SubResource("Style_empty")
+flat = true
+alignment = 1
+item_count = 3
+popup/item_0/text = "Small"
+popup/item_0/id = 0
+popup/item_1/text = "Medium"
+popup/item_1/id = 1
+popup/item_2/text = "Large"
+popup/item_2/id = 2
+
+[node name="SecVision" type="Label" parent="Overlay/AccessibilityPage/List"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.94, 0.82, 1)
+theme_override_colors/font_outline_color = Color(0.18, 0.08, 0.05, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 26
+text = "Vision"
+
+[node name="RowColorblind" type="HBoxContainer" parent="Overlay/AccessibilityPage/List"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Label" type="Label" parent="Overlay/AccessibilityPage/List/RowColorblind"]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.9, 0.8, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 20
+text = "Colorblind Mode"
+vertical_alignment = 1
+
+[node name="ColorblindTrack" type="Control" parent="Overlay/AccessibilityPage/List/RowColorblind"]
+custom_minimum_size = Vector2(320, 48)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 2
+
+[node name="BarTiles" type="NinePatchRect" parent="Overlay/AccessibilityPage/List/RowColorblind/ColorblindTrack"]
+show_behind_parent = true
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("17_smallbar")
+patch_margin_left = 15
+patch_margin_top = 8
+patch_margin_right = 15
+patch_margin_bottom = 8
+axis_stretch_horizontal = 1
+
+[node name="Colorblind" type="OptionButton" parent="Overlay/AccessibilityPage/List/RowColorblind/ColorblindTrack"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 22.0
+offset_top = 4.0
+offset_right = -22.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.94, 0.82, 1)
+theme_override_colors/font_outline_color = Color(0.18, 0.08, 0.05, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("Style_empty")
+theme_override_styles/pressed = SubResource("Style_empty")
+theme_override_styles/hover = SubResource("Style_empty")
+theme_override_styles/disabled = SubResource("Style_empty")
+theme_override_styles/focus = SubResource("Style_empty")
+flat = true
+alignment = 1
+item_count = 4
+popup/item_0/text = "Off"
+popup/item_0/id = 0
+popup/item_1/text = "Protanopia"
+popup/item_1/id = 1
+popup/item_2/text = "Deuteranopia"
+popup/item_2/id = 2
+popup/item_3/text = "Tritanopia"
+popup/item_3/id = 3
+
+[node name="SecGameplay" type="Label" parent="Overlay/AccessibilityPage/List"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.94, 0.82, 1)
+theme_override_colors/font_outline_color = Color(0.18, 0.08, 0.05, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 26
+text = "Gameplay"
+
+[node name="RowDifficulty" type="HBoxContainer" parent="Overlay/AccessibilityPage/List"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Label" type="Label" parent="Overlay/AccessibilityPage/List/RowDifficulty"]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.9, 0.8, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 20
+text = "Difficulty"
+vertical_alignment = 1
+
+[node name="DifficultyTrack" type="Control" parent="Overlay/AccessibilityPage/List/RowDifficulty"]
+custom_minimum_size = Vector2(320, 48)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 2
+
+[node name="BarTiles" type="NinePatchRect" parent="Overlay/AccessibilityPage/List/RowDifficulty/DifficultyTrack"]
+show_behind_parent = true
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("17_smallbar")
+patch_margin_left = 15
+patch_margin_top = 8
+patch_margin_right = 15
+patch_margin_bottom = 8
+axis_stretch_horizontal = 1
+
+[node name="Difficulty" type="OptionButton" parent="Overlay/AccessibilityPage/List/RowDifficulty/DifficultyTrack"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 22.0
+offset_top = 4.0
+offset_right = -22.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.94, 0.82, 1)
+theme_override_colors/font_outline_color = Color(0.18, 0.08, 0.05, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("Style_empty")
+theme_override_styles/pressed = SubResource("Style_empty")
+theme_override_styles/hover = SubResource("Style_empty")
+theme_override_styles/disabled = SubResource("Style_empty")
+theme_override_styles/focus = SubResource("Style_empty")
+flat = true
+alignment = 1
+item_count = 3
+popup/item_0/text = "Easy"
+popup/item_0/id = 0
+popup/item_1/text = "Normal"
+popup/item_1/id = 1
+popup/item_2/text = "Hard"
+popup/item_2/id = 2
+
+[node name="DownBar" type="VScrollBar" parent="Overlay"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 0
+offset_left = 922.0
+offset_top = 268.0
+offset_right = 954.0
+offset_bottom = 628.0
+mouse_default_cursor_shape = 2
+theme = SubResource("Theme_scroll")
+theme_override_styles/scroll = SubResource("Style_scroll")
+theme_override_styles/scroll_focus = SubResource("Style_scroll")
+theme_override_styles/grabber = SubResource("Style_scroll_grab")
+theme_override_styles/grabber_highlight = SubResource("Style_scroll_grab")
+theme_override_styles/grabber_pressed = SubResource("Style_scroll_grab")
+step = 1.0
+page = 40.0
+
+[node name="Status" type="Label" parent="Overlay"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 208.0
+offset_top = 590.0
+offset_right = 910.0
+offset_bottom = 638.0
+theme_override_colors/font_color = Color(1, 0.94, 0.82, 1)
+theme_override_colors/font_outline_color = Color(0.18, 0.08, 0.05, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 18
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ResetButton" type="Button" parent="Overlay"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 245.0
+offset_top = 640.0
+offset_right = 565.0
+offset_bottom = 768.0
+focus_mode = 0
+theme_override_colors/font_color = Color(1, 0.94, 0.82, 1)
+theme_override_colors/font_outline_color = Color(0.18, 0.08, 0.05, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("Style_empty")
+theme_override_styles/pressed = SubResource("Style_empty")
+theme_override_styles/hover = SubResource("Style_empty")
+theme_override_styles/disabled = SubResource("Style_empty")
+theme_override_styles/focus = SubResource("Style_empty")
+text = "Reset"
+flat = true
+
+[node name="BackButton" type="Button" parent="Overlay"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 590.0
+offset_top = 640.0
+offset_right = 910.0
+offset_bottom = 768.0
+focus_mode = 0
+theme_override_colors/font_color = Color(1, 0.94, 0.82, 1)
+theme_override_colors/font_outline_color = Color(0.18, 0.08, 0.05, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("Style_empty")
+theme_override_styles/pressed = SubResource("Style_empty")
+theme_override_styles/hover = SubResource("Style_empty")
+theme_override_styles/disabled = SubResource("Style_empty")
+theme_override_styles/focus = SubResource("Style_empty")
+text = "Back"
+flat = true

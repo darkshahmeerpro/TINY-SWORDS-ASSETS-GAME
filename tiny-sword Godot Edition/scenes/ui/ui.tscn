@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="TileSet" path="res://resources/ui/ui_tileset.tres" id="1_tileset"]
+
+[node name="UIRoot" type="Node2D"]
+
+[node name="UI" type="TileMap" parent="."]
+tile_set = ExtResource("1_tileset")
+format = 2
+layer_0/name = "ui"

@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://p6ix6kd0kpvw"]
+
+[ext_resource type="SpriteFrames" uid="uid://b2tuatth3f1ao" path="res://resources/decorations/sheep_frames.tres" id="1_frames"]
+[ext_resource type="Script" path="res://scripts/ambient/sheep_eat_ai.gd" id="2_script"]
+
+[node name="SheepIdle" type="AnimatedSprite2D"]
+z_index = 6
+sprite_frames = ExtResource("1_frames")
+animation = &"idle"
+autoplay = "idle"
+offset = Vector2(0, -64)
+script = ExtResource("2_script")

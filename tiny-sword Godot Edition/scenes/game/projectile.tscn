@@ -1,0 +1,63 @@
+[gd_scene load_steps=3 format=3 uid="uid://c16e8nlsw1dk2"]
+
+[ext_resource type="Texture2D" uid="uid://c7k2nivthvulr" path="res://assets/units/Blue Units/Archer/Arrow.png" id="2_arrow"]
+
+[sub_resource type="GDScript" id="GDScript_gs15w"]
+script/source = "extends Area2D
+
+var target: Node2D
+var damage: float = 10.0
+var team: String = \"blue\"
+var speed: float = 320.0
+
+
+func setup(p_target: Node2D, p_damage: float, p_team: String) -> void:
+	target = p_target
+	damage = p_damage
+	team = p_team
+
+
+func _ready() -> void:
+	var shape := CircleShape2D.new()
+	shape.radius = 6.0
+	$CollisionShape2D.shape = shape
+	body_entered.connect(_on_body_entered)
+	area_entered.connect(_on_area_entered)
+
+
+func _physics_process(delta: float) -> void:
+	if target == null or not is_instance_valid(target):
+		queue_free()
+		return
+	var dir := global_position.direction_to(target.global_position)
+	global_position += dir * speed * delta
+	rotation = dir.angle()
+	if global_position.distance_to(target.global_position) < 10.0:
+		_hit(target)
+
+
+func _on_body_entered(body: Node) -> void:
+	_hit(body)
+
+
+func _on_area_entered(area: Area2D) -> void:
+	_hit(area.get_parent())
+
+
+func _hit(node: Node) -> void:
+	if node is Unit:
+		var u := node as Unit
+		if u.team != team:
+			u.take_damage(damage)
+			queue_free()
+"
+
+[node name="Projectile" type="Area2D"]
+collision_layer = 8
+collision_mask = 6
+script = SubResource("GDScript_gs15w")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_arrow")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]

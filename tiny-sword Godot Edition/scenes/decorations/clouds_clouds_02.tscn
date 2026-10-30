@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="SpriteFrames" path="res://resources/decorations/clouds_clouds_02_frames.tres" id="1_frames"]
+
+[node name="clouds_clouds_02" type="AnimatedSprite2D"]
+sprite_frames = ExtResource("1_frames")
+animation = &"idle"
+autoplay = "idle"
+offset = Vector2(0, -128)

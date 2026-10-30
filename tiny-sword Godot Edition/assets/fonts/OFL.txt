@@ -1,0 +1,5 @@
+Pixelify Sans
+Copyright 2021 The Pixelify Sans Project Authors
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+https://scripts.sil.org/OFL

@@ -1,0 +1,109 @@
+[gd_resource type="TileSet" load_steps=17 format=3 uid="uid://blkukjv7b3uh5"]
+
+[ext_resource type="Texture2D" uid="uid://c8u4cp0gnetq5" path="res://assets/terrain/trees/Tree1.png" id="1_tree1"]
+[ext_resource type="Texture2D" uid="uid://j20m3h4oiu0n" path="res://assets/terrain/trees/Tree2.png" id="2_tree2"]
+[ext_resource type="Texture2D" uid="uid://dpv4nqrtdytg4" path="res://assets/terrain/trees/Tree3.png" id="3_tree3"]
+[ext_resource type="Texture2D" uid="uid://da0mou1jo0go8" path="res://assets/terrain/trees/Tree4.png" id="4_tree4"]
+[ext_resource type="Texture2D" uid="uid://oca2ssh2mrxe" path="res://assets/terrain/trees/Stump1.png" id="5_stump1"]
+[ext_resource type="Texture2D" uid="uid://ci37ylj4flegj" path="res://assets/terrain/trees/Stump2.png" id="6_stump2"]
+[ext_resource type="Texture2D" uid="uid://d2ocygin3vjju" path="res://assets/terrain/trees/Stump3.png" id="7_stump3"]
+[ext_resource type="Texture2D" uid="uid://6jnekoq16ww0" path="res://assets/terrain/trees/Stump4.png" id="8_stump4"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tree1"]
+texture = ExtResource("1_tree1")
+texture_region_size = Vector2i(192, 256)
+0:0/animation_columns = 8
+0:0/animation_speed = 8.0
+0:0/animation_frame_0/duration = 1.0
+0:0/animation_frame_1/duration = 1.0
+0:0/animation_frame_2/duration = 1.0
+0:0/animation_frame_3/duration = 1.0
+0:0/animation_frame_4/duration = 1.0
+0:0/animation_frame_5/duration = 1.0
+0:0/animation_frame_6/duration = 1.0
+0:0/animation_frame_7/duration = 1.0
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(64, 192)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tree2"]
+texture = ExtResource("2_tree2")
+texture_region_size = Vector2i(192, 256)
+0:0/animation_columns = 8
+0:0/animation_speed = 8.0
+0:0/animation_frame_0/duration = 1.0
+0:0/animation_frame_1/duration = 1.0
+0:0/animation_frame_2/duration = 1.0
+0:0/animation_frame_3/duration = 1.0
+0:0/animation_frame_4/duration = 1.0
+0:0/animation_frame_5/duration = 1.0
+0:0/animation_frame_6/duration = 1.0
+0:0/animation_frame_7/duration = 1.0
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(64, 192)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tree3"]
+texture = ExtResource("3_tree3")
+texture_region_size = Vector2i(192, 192)
+0:0/animation_columns = 8
+0:0/animation_speed = 8.0
+0:0/animation_frame_0/duration = 1.0
+0:0/animation_frame_1/duration = 1.0
+0:0/animation_frame_2/duration = 1.0
+0:0/animation_frame_3/duration = 1.0
+0:0/animation_frame_4/duration = 1.0
+0:0/animation_frame_5/duration = 1.0
+0:0/animation_frame_6/duration = 1.0
+0:0/animation_frame_7/duration = 1.0
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(64, 128)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tree4"]
+texture = ExtResource("4_tree4")
+texture_region_size = Vector2i(192, 192)
+0:0/animation_columns = 8
+0:0/animation_speed = 8.0
+0:0/animation_frame_0/duration = 1.0
+0:0/animation_frame_1/duration = 1.0
+0:0/animation_frame_2/duration = 1.0
+0:0/animation_frame_3/duration = 1.0
+0:0/animation_frame_4/duration = 1.0
+0:0/animation_frame_5/duration = 1.0
+0:0/animation_frame_6/duration = 1.0
+0:0/animation_frame_7/duration = 1.0
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(64, 128)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_stump1"]
+texture = ExtResource("5_stump1")
+texture_region_size = Vector2i(192, 256)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(64, 192)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_stump2"]
+texture = ExtResource("6_stump2")
+texture_region_size = Vector2i(192, 256)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(64, 192)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_stump3"]
+texture = ExtResource("7_stump3")
+texture_region_size = Vector2i(192, 256)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(64, 192)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_stump4"]
+texture = ExtResource("8_stump4")
+texture_region_size = Vector2i(192, 256)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(64, 192)
+
+[resource]
+tile_size = Vector2i(64, 64)
+sources/0 = SubResource("TileSetAtlasSource_tree1")
+sources/1 = SubResource("TileSetAtlasSource_tree2")
+sources/2 = SubResource("TileSetAtlasSource_tree3")
+sources/3 = SubResource("TileSetAtlasSource_tree4")
+sources/4 = SubResource("TileSetAtlasSource_stump1")
+sources/5 = SubResource("TileSetAtlasSource_stump2")
+sources/6 = SubResource("TileSetAtlasSource_stump3")
+sources/7 = SubResource("TileSetAtlasSource_stump4")

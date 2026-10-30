@@ -1,0 +1,48 @@
+[gd_scene load_steps=2 format=3 uid="uid://387kc4yru662"]
+
+[sub_resource type="GDScript" id="GDScript_j4e6q"]
+script/source = "extends CanvasLayer
+
+@onready var status_label: Label = $Root/StatusLabel
+@onready var selection_label: Label = $Root/SelectionLabel
+@onready var pause_panel: Control = $Root/PausePanel
+
+
+func _ready() -> void:
+x1	pause_panel.visible = false
+	var selection := get_parent().get_node_or_null(\"Selection\")
+	if selection and selection.has_signal(\"selection_changed\"):
+		selection.selection_changed.connect(_on_selection_changed)
+	status_label.text = \"LMB select · RMB move/attack · WASD pan · Esc pause\"
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed(\"ui_cancel\"):
+		pause_panel.visible = not pause_panel.visible
+		get_tree().paused = pause_panel.visible
+
+
+func _on_selection_changed(units: Array) -> void:
+	if units.is_empty():
+		selection_label.text = \"No selection\"
+	else:
+		var names: PackedStringArray = []
+		for u in units:
+			if u != null and is_instance_valid(u) and \"unit_type\" in u:
+				names.append(str(u.unit_type).capitalize())
+		selection_label.text = \"Selected: %s (%d)\" % [\", \".join(names), units.size()]
+
+
+func _on_resume_pressed() -> void:
+	pause_panel.visible = false
+	get_tree().paused = false
+
+
+func _on_menu_pressed() -> void:
+	get_tree().paused = false
+	get_tree().change_scene_to_file(\"res://tiny_swords_logo.tscn\")
+"
+
+[node name="CombatHUD" type="CanvasLayer"]
+process_mode = 3
+script = SubResource("GDScript_j4e6q")

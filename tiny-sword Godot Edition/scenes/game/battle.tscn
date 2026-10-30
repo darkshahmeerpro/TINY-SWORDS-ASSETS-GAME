@@ -1,0 +1,338 @@
+[gd_scene load_steps=9 format=3 uid="uid://cjls7f6dc0a58"]
+
+[ext_resource type="PackedScene" uid="uid://c5cfri7gpebrq" path="res://tiny_swords_logo.tscn" id="1_map"]
+[ext_resource type="PackedScene" uid="uid://387kc4yru662" path="res://scenes/ui/combat_hud.tscn" id="5_hud"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_empty"]
+
+[sub_resource type="GDScript" id="GDScript_07g06"]
+script/source = "extends Node2D
+
+## Builds a walkable NavigationRegion2D from TileMap ground used cells.
+
+@export var tilemap_path: NodePath = ^\"../Map/TileMap\"
+@export var ground_layer: int = 0
+
+
+func _ready() -> void:
+	call_deferred(\"_bake\")
+
+
+func _bake() -> void:
+	var tilemap := get_node_or_null(tilemap_path) as TileMap
+	var region := get_parent().get_node_or_null(\"NavigationRegion2D\") as NavigationRegion2D
+	if tilemap == null or region == null:
+		push_warning(\"NavBaker: missing TileMap or NavigationRegion2D\")
+		return
+	var cells := tilemap.get_used_cells(ground_layer)
+	if cells.is_empty():
+		return
+	var min_c := cells[0]
+	var max_c := cells[0]
+	for c in cells:
+		min_c = Vector2i(mini(min_c.x, c.x), mini(min_c.y, c.y))
+		max_c = Vector2i(maxi(max_c.x, c.x), maxi(max_c.y, c.y))
+	var ts := tilemap.tile_set.tile_size if tilemap.tile_set else Vector2i(64, 64)
+	var top_left := tilemap.to_global(tilemap.map_to_local(min_c) - Vector2(ts) * 0.5)
+	var bottom_right := tilemap.to_global(tilemap.map_to_local(max_c) + Vector2(ts) * 0.5)
+	var nav_poly := NavigationPolygon.new()
+	nav_poly.vertices = PackedVector2Array(
+		[
+			top_left,
+			Vector2(bottom_right.x, top_left.y),
+			bottom_right,
+			Vector2(top_left.x, bottom_right.y),
+		]
+	)
+	nav_poly.add_polygon(PackedInt32Array([0, 1, 2, 3]))
+	region.navigation_polygon = nav_poly
+	region.enabled = true
+"
+
+[sub_resource type="GDScript" id="GDScript_eadm2"]
+script/source = "extends Node2D
+
+const BLUE_WARRIOR := preload(\"res://scenes/units/blue/warrior.tscn\")
+const BLUE_ARCHER := preload(\"res://scenes/units/blue/archer.tscn\")
+const BLUE_LANCER := preload(\"res://scenes/units/blue/lancer.tscn\")
+const BLUE_MONK := preload(\"res://scenes/units/blue/monk.tscn\")
+const RED_WARRIOR := preload(\"res://scenes/units/red/warrior.tscn\")
+const RED_ARCHER := preload(\"res://scenes/units/red/archer.tscn\")
+const RED_LANCER := preload(\"res://scenes/units/red/lancer.tscn\")
+const RED_PAWN := preload(\"res://scenes/units/red/pawn.tscn\")
+const BLUE_CASTLE := preload(\"res://scenes/buildings/blue/castle.tscn\")
+const RED_CASTLE := preload(\"res://scenes/buildings/red/castle.tscn\")
+const BLUE_TOWER := preload(\"res://scenes/buildings/blue/tower.tscn\")
+const RED_TOWER := preload(\"res://scenes/buildings/red/tower.tscn\")
+const BLUE_HOUSE := preload(\"res://scenes/buildings/blue/house1.tscn\")
+const RED_HOUSE := preload(\"res://scenes/buildings/red/house1.tscn\")
+
+
+func _ready() -> void:
+	await get_tree().process_frame
+	await get_tree().process_frame
+	_spawn()
+
+
+func _spawn() -> void:
+	var units := get_parent().get_node(\"Units\")
+	var buildings := get_parent().get_node(\"Buildings\")
+	var rng := RandomNumberGenerator.new()
+	rng.seed = hash(\"tiny_sword_default\")
+	var jitter := Vector2(rng.randf_range(-48.0, 48.0), rng.randf_range(-48.0, 48.0))
+	# Blue west
+	_spawn_group(units, BLUE_WARRIOR, Vector2(220, 280) + jitter, 3, 36)
+	_spawn_group(units, BLUE_ARCHER, Vector2(180, 340) + jitter, 2, 40)
+	_spawn_group(units, BLUE_LANCER, Vector2(260, 320) + jitter, 2, 40)
+	_spawn_group(units, BLUE_MONK, Vector2(200, 380) + jitter, 1, 0)
+	# Red east
+	var enemy_jitter := Vector2(rng.randf_range(-48.0, 48.0), rng.randf_range(-48.0, 48.0))
+	_spawn_group(units, RED_WARRIOR, Vector2(900, 420) + enemy_jitter, 3, 36)
+	_spawn_group(units, RED_ARCHER, Vector2(960, 460) + enemy_jitter, 2, 40)
+	_spawn_group(units, RED_LANCER, Vector2(860, 480) + enemy_jitter, 2, 40)
+	_spawn_group(units, RED_PAWN, Vector2(920, 520) + enemy_jitter, 3, 32)
+	# Buildings
+	_add(buildings, BLUE_CASTLE, Vector2(160, 220) + jitter)
+	_add(buildings, BLUE_TOWER, Vector2(300, 260) + jitter)
+	_add(buildings, BLUE_HOUSE, Vector2(120, 360) + jitter)
+	_add(buildings, RED_CASTLE, Vector2(980, 360) + enemy_jitter)
+	_add(buildings, RED_TOWER, Vector2(820, 400) + enemy_jitter)
+	_add(buildings, RED_HOUSE, Vector2(1040, 480) + enemy_jitter)
+
+
+func _spawn_group(parent: Node, scene: PackedScene, origin: Vector2, count: int, spacing: float) -> void:
+	for i in count:
+		var u: Node2D = scene.instantiate()
+		u.global_position = origin + Vector2((i % 3) * spacing, (i / 3) * spacing)
+		parent.add_child(u)
+
+
+func _add(parent: Node, scene: PackedScene, pos: Vector2) -> void:
+	var n: Node2D = scene.instantiate()
+	n.global_position = pos
+	parent.add_child(n)
+"
+
+[sub_resource type="GDScript" id="GDScript_r1s8l"]
+script/source = "extends Node2D
+
+## Places a handful of decoration scenes around the battle map.
+
+const DECOS := [
+	\"res://scenes/decorations/rocks_rock1.tscn\",
+	\"res://scenes/decorations/rocks_rock2.tscn\",
+	\"res://scenes/decorations/bushes_bushe1.tscn\",
+	\"res://scenes/decorations/bushes_bushe2.tscn\",
+	\"res://scenes/decorations/clouds_clouds_01.tscn\",
+	\"res://scenes/decorations/rocks_in_the_water_water_rocks_01.tscn\",
+	\"res://scenes/decorations/rubber_duck_rubber_duck.tscn\",
+]
+
+
+func _ready() -> void:
+	call_deferred(\"_place\")
+
+
+func _place() -> void:
+	var parent := get_parent().get_node_or_null(\"Decorations\")
+	if parent == null:
+		return
+	var positions := [
+		Vector2(100, 500),
+		Vector2(400, 560),
+		Vector2(700, 200),
+		Vector2(1100, 300),
+		Vector2(500, 100),
+		Vector2(850, 550),
+		Vector2(250, 450),
+	]
+	for i in positions.size():
+		var path: String = DECOS[i % DECOS.size()]
+		if not ResourceLoader.exists(path):
+			continue
+		var scene: PackedScene = load(path)
+		var node: Node2D = scene.instantiate()
+		node.global_position = positions[i]
+		parent.add_child(node)
+"
+
+[sub_resource type="GDScript" id="GDScript_0bjw1"]
+script/source = "extends Camera2D
+
+@export var pan_speed: float = 420.0
+@export var edge_margin: float = 24.0
+
+
+func _process(delta: float) -> void:
+	var dir := Vector2.ZERO
+	if Input.is_key_pressed(KEY_W) or Input.is_key_pressed(KEY_UP):
+		dir.y -= 1.0
+	if Input.is_key_pressed(KEY_S) or Input.is_key_pressed(KEY_DOWN):
+		dir.y += 1.0
+	if Input.is_key_pressed(KEY_A) or Input.is_key_pressed(KEY_LEFT):
+		dir.x -= 1.0
+	if Input.is_key_pressed(KEY_D) or Input.is_key_pressed(KEY_RIGHT):
+		dir.x += 1.0
+	var mouse := get_viewport().get_mouse_position()
+	var size := get_viewport().get_visible_rect().size
+	if mouse.x <= edge_margin:
+		dir.x -= 1.0
+	elif mouse.x >= size.x - edge_margin:
+		dir.x += 1.0
+	if mouse.y <= edge_margin:
+		dir.y -= 1.0
+	elif mouse.y >= size.y - edge_margin:
+		dir.y += 1.0
+	if dir != Vector2.ZERO:
+		global_position += dir.normalized() * pan_speed * delta
+"
+
+[sub_resource type="GDScript" id="GDScript_8xafb"]
+script/source = "extends Node2D
+
+signal selection_changed(units: Array)
+
+var selected: Array[Unit] = []
+var drag_start: Vector2 = Vector2.ZERO
+var drag_end: Vector2 = Vector2.ZERO
+var dragging: bool = false
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		var mb := event as InputEventMouseButton
+		if mb.button_index == MOUSE_BUTTON_LEFT:
+			if mb.pressed:
+				drag_start = get_global_mouse_position()
+				drag_end = drag_start
+				dragging = true
+				queue_redraw()
+			else:
+				if dragging:
+					_finish_select(get_global_mouse_position())
+				dragging = false
+				queue_redraw()
+		elif mb.button_index == MOUSE_BUTTON_RIGHT and mb.pressed:
+			_order_at(get_global_mouse_position())
+	elif event is InputEventMouseMotion and dragging:
+		drag_end = get_global_mouse_position()
+		queue_redraw()
+
+
+func _draw() -> void:
+	if not dragging:
+		return
+	var r := Rect2(to_local(drag_start), to_local(drag_end) - to_local(drag_start)).abs()
+	draw_rect(r, Color(0.3, 0.75, 1.0, 0.15), true)
+	draw_rect(r, Color(0.4, 0.85, 1.0, 0.8), false, 2.0)
+
+
+func _finish_select(end: Vector2) -> void:
+	var r := Rect2(drag_start, end - drag_start).abs()
+	_clear_selection()
+	if r.size.length() < 8.0:
+		var u := _unit_at(end)
+		if u != null and u.is_player_controllable:
+			_select_unit(u)
+	else:
+		for node in get_tree().get_nodes_in_group(\"units\"):
+			if node is Unit:
+				var u := node as Unit
+				if u.is_player_controllable and u.state != Unit.State.DEAD and r.has_point(u.global_position):
+					_select_unit(u)
+	selection_changed.emit(selected)
+
+
+func _unit_at(pos: Vector2) -> Unit:
+	var best: Unit = null
+	var best_d := 28.0
+	for node in get_tree().get_nodes_in_group(\"units\"):
+		if node is Unit:
+			var u := node as Unit
+			if not u.is_player_controllable or u.state == Unit.State.DEAD:
+				continue
+			var d := u.global_position.distance_to(pos)
+			if d < best_d:
+				best_d = d
+				best = u
+	return best
+
+
+func _select_unit(u: Unit) -> void:
+	if u in selected:
+		return
+	selected.append(u)
+	u.set_selected(true)
+
+
+func _clear_selection() -> void:
+	for u in selected:
+		if is_instance_valid(u):
+			u.set_selected(false)
+	selected.clear()
+
+
+func _order_at(pos: Vector2) -> void:
+	if selected.is_empty():
+		return
+	var enemy := _enemy_at(pos)
+	for u in selected:
+		if not is_instance_valid(u) or u.state == Unit.State.DEAD:
+			continue
+		if enemy != null:
+			u.command_attack(enemy)
+		else:
+			u.command_move(pos, Input.is_key_pressed(KEY_SHIFT))
+
+
+func _enemy_at(pos: Vector2) -> Unit:
+	var best: Unit = null
+	var best_d := 32.0
+	for node in get_tree().get_nodes_in_group(\"units\"):
+		if node is Unit:
+			var u := node as Unit
+			if u.is_player_controllable or u.state == Unit.State.DEAD:
+				continue
+			var d := u.global_position.distance_to(pos)
+			if d < best_d:
+				best_d = d
+				best = u
+	return best
+"
+
+[node name="Battle" type="Node2D"]
+
+[node name="Map" parent="." instance=ExtResource("1_map")]
+position = Vector2(29, 10)
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+navigation_polygon = SubResource("NavigationPolygon_empty")
+
+[node name="NavBaker" type="Node2D" parent="."]
+script = SubResource("GDScript_07g06")
+
+[node name="Buildings" type="Node2D" parent="."]
+z_index = 3
+
+[node name="Units" type="Node2D" parent="."]
+z_index = 5
+
+[node name="Decorations" type="Node2D" parent="."]
+z_index = 4
+
+[node name="Spawner" type="Node2D" parent="."]
+script = SubResource("GDScript_eadm2")
+
+[node name="DecorationPlacer" type="Node2D" parent="."]
+script = SubResource("GDScript_r1s8l")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(640, 400)
+zoom = Vector2(1.1, 1.1)
+script = SubResource("GDScript_0bjw1")
+
+[node name="Selection" type="Node2D" parent="."]
+z_index = 20
+script = SubResource("GDScript_8xafb")
+
+[node name="HUD" parent="." instance=ExtResource("5_hud")]

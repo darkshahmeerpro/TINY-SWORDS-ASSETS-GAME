@@ -1,0 +1,58 @@
+# 🗺️ Tiny Swords Tilemap Generation Rules (Cursor Instructions)
+
+**System Directive for Cursor:** You are an expert game developer writing tilemap generation or auto-tiling logic for the "Tiny Swords" asset pack by Pixel Frog. You must generate the tilemap **strictly layer-by-layer**, ensuring every new layer is mathematically and logically dependent on the underlying layer. 
+
+Pay extremely close attention to the **Elevated Ground (Mountains)** and **Shadows**, as these are the most complex parts of the generation.
+
+## 📏 1. Core Grid & Sizes
+- **Base Grid:** `64x64` pixels. All tile coordinates map to this grid.
+- **Overlap Tiles:** `Shadow` (128x128) and `Water Foam` (animated) are larger than 64x64, but **must be placed on the 64x64 grid**. The extra size is intentionally designed to overlap neighboring tiles.
+
+---
+
+## 🥞 2. The Layer-by-Layer Algorithm
+
+You must execute the generation in the following strict order. **Do not generate a layer until the layer below it is completely defined.**
+
+### Layer 0: BG Color (Water)
+- **Rule:** This is the absolute base. Fill all empty space/background arrays with this tile. This represents the deep water.
+
+### Layer 1: Water Foam (Coastlines)
+- **Rule:** Iterate through the map. Wherever a terrain tile (from Layer 2) touches a `BG Color` tile, place a Water Foam sprite. 
+- **Offset/Animation:** To make it look natural, ensure different Water Foam sprites start their animation on different frames (randomize the start frame).
+
+### Layer 2: Flat Ground (Base Terrain)
+- **Rule:** This is the lowest walkable terrain. Place these tiles directly above the water. 
+
+### Layer 3 to N: Elevated Ground & Shadows (The Mountains)
+*This is an iterative process. For every level of elevation you want to add, you must repeat the following two sub-layers in exact order:*
+
+#### Step A: Shadows (CRITICAL)
+- **Rule:** Shadows add depth and must be placed *before* the Elevated Ground. 
+- **Placement Logic:** Find the exact 64x64 coordinates where the *walkable* part of the upcoming Elevated Ground will go. Place the shadow sprites exactly **one 64x64 square downwards (Y + 1 in a top-down 2D grid)** from that walkable area.
+- **Overlap:** Because they are 128x128 but placed on a 64x64 grid, the edges will naturally overlap.
+
+#### Step B: Elevated Ground (The Mountains / Cliffs)
+- **Rule:** The walkable area of Elevation `N+1` must fit entirely within the bounds of Elevation `N`.
+- **⚠️ MOUNTAIN CLIFF LOGIC (FIXING THE ERRORS):**
+  Cursor, you must programmatically distinguish between the **TWO types of cliffs** present in the Tiny Swords Elevated Ground tileset:
+  1. **Terrain-Facing Cliff:** Use this cliff tile if the bottom edge of the Elevated Ground drops down onto a walkable terrain (e.g., Flat Ground or a lower Mountain layer).
+  2. **Water-Facing Cliff:** Use this cliff tile if the bottom edge of the Elevated Ground drops directly into the `BG Color` (Water). 
+  *Failure to check the tile type directly below the cliff will result in broken mountain sprites.*
+
+---
+
+## 🪜 3. Connecting Layers (Stairs)
+
+When generating paths that connect a lower terrain to an upper terrain, implement this conditional logic for stairs:
+
+- **Condition A (Walkable Base):** If the stairs are placed on a flat, walkable area and are NOT connecting through a cliff face, use **one** Elevated Ground center piece to connect them at the top.
+- **Condition B (Cliff Base):** If the stairs are placed overlapping a Cliff face, you must use **two pieces**:
+  1. One stair piece to connect to the top walkable part of the Elevated Ground.
+  2. A second piece to connect to the bottom part of the Cliff.
+
+## 📝 4. Cursor Coding Directives
+When generating code (C#, GDScript, Python, etc.) based on this document:
+1. Create clear data structures representing `Elevation Level` (0 for flat ground, 1 for first mountain, etc.).
+2. Write a function specifically named `EvaluateCliffType(x, y)` that checks the grid cell immediately below the cliff to return either `WATER_CLIFF` or `TERRAIN_CLIFF`.
+3. Always complete the entire grid for Layer `Z` before calculating Layer `Z+1`.

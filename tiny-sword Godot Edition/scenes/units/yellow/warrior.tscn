@@ -1,0 +1,43 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/units/unit.gd" id="1_script"]
+[ext_resource type="SpriteFrames" path="res://resources/units/yellow/warrior_frames.tres" id="2_frames"]
+
+[node name="YellowWarrior" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 1
+motion_mode = 1
+script = ExtResource("1_script")
+team = "yellow"
+unit_type = "warrior"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("2_frames")
+animation = &"idle"
+autoplay = "idle"
+offset = Vector2(0, -48)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -16)
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_desired_distance = 8.0
+target_desired_distance = 12.0
+avoidance_enabled = true
+radius = 14.0
+max_speed = 120.0
+
+[node name="AggroArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="AggroShape" type="CollisionShape2D" parent="AggroArea"]
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+offset_left = -20.0
+offset_top = -72.0
+offset_right = 20.0
+offset_bottom = -64.0
+max_value = 100.0
+value = 100.0
+show_percentage = false

@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="SpriteFrames" path="res://resources/units/yellow/pawn_frames.tres" id="1_frames"]
+
+[node name="YellowPawnIdle" type="AnimatedSprite2D"]
+z_index = 7
+sprite_frames = ExtResource("1_frames")
+animation = &"idle"
+autoplay = "idle"
+offset = Vector2(0, -48)

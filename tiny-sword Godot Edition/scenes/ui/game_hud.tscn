@@ -1,0 +1,730 @@
+[gd_scene load_steps=10 format=3 uid="uid://dj0ehusidjf5p"]
+
+[ext_resource type="Script" uid="uid://dp7c6pydxtxfh" path="res://scripts/ui/game_hud.gd" id="1_script"]
+[ext_resource type="FontFile" uid="uid://bsrjo35eum5ca" path="res://assets/fonts/PixelifySans.ttf" id="2_font"]
+[ext_resource type="TileSet" uid="uid://ce50phno1xre3" path="res://resources/ui/ui_tileset.tres" id="3_ui"]
+[ext_resource type="Texture2D" uid="uid://5psqo76h1d00" path="res://assets/ui_pack/UI Elements/Icons/Icon_10.png" id="4_gear"]
+[ext_resource type="Texture2D" uid="uid://db2jgw7tf1dsj" path="res://assets/ui_pack/UI Elements/Human Avatars/Avatars_05.png" id="5_acb04"]
+[ext_resource type="Texture2D" uid="uid://cbkdphxhait6u" path="res://assets/branding/tiny_swords_logo.png" id="7_logo"]
+[ext_resource type="Texture2D" uid="uid://cp6vwwme1qmge" path="res://assets/ui/health_sword.png" id="8_sword"]
+[ext_resource type="PackedScene" uid="uid://du6bf2ns42qom" path="res://scenes/ui/menu_world_backdrop.tscn" id="9_backdrop"]
+
+[sub_resource type="StyleBoxEmpty" id="Style_empty"]
+
+[node name="GameHUD" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -4.0
+offset_top = 3.0
+offset_right = -4.0
+offset_bottom = 3.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_script")
+
+[node name="PauseButton" type="Button" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(56, 56)
+layout_mode = 0
+offset_left = 1827.0
+offset_top = 20.0
+offset_right = 1883.0
+offset_bottom = 76.0
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("Style_empty")
+theme_override_styles/pressed = SubResource("Style_empty")
+theme_override_styles/hover = SubResource("Style_empty")
+theme_override_styles/focus = SubResource("Style_empty")
+icon = ExtResource("4_gear")
+flat = true
+expand_icon = true
+
+[node name="HintLabel" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -300.0
+offset_top = 78.0
+offset_right = 300.0
+offset_bottom = 110.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.9, 0.86, 0.76, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 18
+text = "WASD explore · Esc pause"
+horizontal_alignment = 1
+
+[node name="MinimapFrame" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = -256.0
+offset_right = 256.0
+offset_bottom = -16.0
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="MinimapView" type="TextureRect" parent="MinimapFrame"]
+unique_name_in_owner = true
+texture_filter = 1
+clip_contents = true
+layout_mode = 0
+offset_right = 240.0
+offset_bottom = 240.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CompassN" type="Label" parent="MinimapFrame"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 8.0
+offset_right = 140.0
+offset_bottom = 34.0
+theme_override_colors/font_color = Color(1, 0.85, 0.45, 1)
+theme_override_colors/font_outline_color = Color(0.1, 0.06, 0.03, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 18
+text = "N"
+horizontal_alignment = 1
+
+[node name="PlayerMarker" type="Control" parent="MinimapFrame"]
+unique_name_in_owner = true
+anchors_preset = 0
+offset_left = 112.0
+offset_top = 112.0
+offset_right = 128.0
+offset_bottom = 128.0
+pivot_offset = Vector2(8, 8)
+mouse_filter = 2
+
+[node name="Glow" type="ColorRect" parent="MinimapFrame/PlayerMarker"]
+layout_mode = 0
+offset_left = -4.0
+offset_top = -4.0
+offset_right = 20.0
+offset_bottom = 20.0
+mouse_filter = 2
+color = Color(1, 0.35, 0.15, 0.35)
+
+[node name="Outline" type="ColorRect" parent="MinimapFrame/PlayerMarker"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 15.0
+offset_bottom = 15.0
+mouse_filter = 2
+color = Color(1, 0.97, 0.9, 1)
+
+[node name="Core" type="ColorRect" parent="MinimapFrame/PlayerMarker"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 13.0
+offset_bottom = 13.0
+mouse_filter = 2
+color = Color(0.92, 0.18, 0.14, 1)
+
+[node name="Tip" type="ColorRect" parent="MinimapFrame/PlayerMarker"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = -2.0
+offset_right = 11.0
+offset_bottom = 4.0
+mouse_filter = 2
+color = Color(1, 0.86, 0.28, 1)
+
+[node name="ActionBar" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -180.0
+offset_top = -100.0
+offset_right = 180.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="SlotTiles" type="TileMap" parent="ActionBar"]
+z_index = -1
+position = Vector2(20, 8)
+tile_set = ExtResource("3_ui")
+format = 2
+layer_0/name = "slots"
+layer_0/tile_data = PackedInt32Array(0, 196682, 1, 1, 196682, 1, 2, 196682, 1, 3, 196682, 1, 4, 327754, 1, -3, 74, 0, 65533, 74, 1, -2, 65610, 0, 65534, 65610, 1, -1, 196682, 0, 65535, 196682, 1, -65536, 196682, 0, -65534, 196682, 0, -65535, 196682, 0, -65533, 196682, 0, -65532, 327754, 0, -65531, 393290, 0, 5, 393290, 1, -65530, 131146, 1, 6, 131146, 1, -65529, 131146, 1, 7, 131146, 1, -65528, 131146, 1, 8, 131146, 1, -65527, 131146, 1, 9, 131146, 1, -65526, 131146, 1, 10, 131146, 1)
+layer_1/name = "BUTTON"
+layer_1/z_index = 1
+layer_1/tile_data = PackedInt32Array(-1, 27, 0, -65536, 27, 0, -65535, 27, 0, -65534, 27, 0, -65533, 27, 0, -65532, 27, 0, -65531, 131146, 1, -65530, 262218, 1, -65529, 131146, 1, -65527, 131146, 1, -65528, 131146, 1, 0, 131146, 1, 65536, 131146, 1)
+
+[node name="Slots" type="HBoxContainer" parent="ActionBar"]
+layout_mode = 0
+offset_left = -44.0
+offset_top = -3.0
+offset_right = 340.0
+offset_bottom = 61.0
+theme_override_constants/separation = 0
+
+[node name="Slot1" type="Button" parent="ActionBar/Slots"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(1, 0.94, 0.82, 1)
+theme_override_colors/font_outline_color = Color(0.12, 0.08, 0.05, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("Style_empty")
+theme_override_styles/pressed = SubResource("Style_empty")
+theme_override_styles/hover = SubResource("Style_empty")
+theme_override_styles/focus = SubResource("Style_empty")
+text = "1"
+flat = true
+
+[node name="Slot2" type="Button" parent="ActionBar/Slots"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(1, 0.94, 0.82, 1)
+theme_override_colors/font_outline_color = Color(0.12, 0.08, 0.05, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("Style_empty")
+theme_override_styles/pressed = SubResource("Style_empty")
+theme_override_styles/hover = SubResource("Style_empty")
+theme_override_styles/focus = SubResource("Style_empty")
+text = "2"
+flat = true
+
+[node name="Slot3" type="Button" parent="ActionBar/Slots"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(1, 0.94, 0.82, 1)
+theme_override_colors/font_outline_color = Color(0.12, 0.08, 0.05, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("Style_empty")
+theme_override_styles/pressed = SubResource("Style_empty")
+theme_override_styles/hover = SubResource("Style_empty")
+theme_override_styles/focus = SubResource("Style_empty")
+text = "3"
+flat = true
+
+[node name="Slot4" type="Button" parent="ActionBar/Slots"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(1, 0.94, 0.82, 1)
+theme_override_colors/font_outline_color = Color(0.12, 0.08, 0.05, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("Style_empty")
+theme_override_styles/pressed = SubResource("Style_empty")
+theme_override_styles/hover = SubResource("Style_empty")
+theme_override_styles/focus = SubResource("Style_empty")
+text = "4"
+flat = true
+
+[node name="Slot5" type="Button" parent="ActionBar/Slots"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(1, 0.94, 0.82, 1)
+theme_override_colors/font_outline_color = Color(0.12, 0.08, 0.05, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("Style_empty")
+theme_override_styles/pressed = SubResource("Style_empty")
+theme_override_styles/hover = SubResource("Style_empty")
+theme_override_styles/focus = SubResource("Style_empty")
+text = "5"
+flat = true
+
+[node name="Slot6" type="Button" parent="ActionBar/Slots"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(1, 0.94, 0.82, 1)
+theme_override_colors/font_outline_color = Color(0.12, 0.08, 0.05, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("Style_empty")
+theme_override_styles/pressed = SubResource("Style_empty")
+theme_override_styles/hover = SubResource("Style_empty")
+theme_override_styles/focus = SubResource("Style_empty")
+text = "6"
+flat = true
+
+[node name="InfoPanel" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -340.0
+offset_top = -280.0
+offset_right = -12.0
+offset_bottom = -12.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="FrameTiles" type="TileMap" parent="InfoPanel"]
+z_index = -1
+position = Vector2(0, -10)
+tile_set = ExtResource("3_ui")
+format = 2
+layer_0/name = "wood"
+layer_0/tile_data = PackedInt32Array(0, 75, 0, 1, 196683, 0, 2, 196683, 0, 3, 196683, 0, 4, 393291, 0, 65536, 75, 3, 65537, 196683, 3, 65538, 196683, 3, 65539, 196683, 3, 65540, 393291, 3, 131072, 75, 3, 131073, 196683, 3, 131074, 196683, 3, 131075, 196683, 3, 131076, 393291, 3, 196608, 75, 6, 196609, 196683, 6, 196610, 196683, 6, 196611, 196683, 6, 196612, 393291, 6)
+
+[node name="InfoLabel" type="Label" parent="InfoPanel"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 73.0
+offset_top = 107.0
+offset_right = 247.0
+offset_bottom = 134.0
+theme_override_colors/font_color = Color(1, 0.94, 0.82, 1)
+theme_override_colors/font_outline_color = Color(0.18, 0.08, 0.05, 1)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 20
+text = "Explore the world"
+autowrap_mode = 3
+
+[node name="PausePanel" type="Control" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Dim" type="ColorRect" parent="PausePanel"]
+z_index = -2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.03, 0.05, 0.07, 0.62)
+
+[node name="PanelHost" type="Control" parent="PausePanel"]
+z_index = 2
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -288.0
+offset_top = -320.0
+offset_right = 288.0
+offset_bottom = 320.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FrameTiles" type="TileMap" parent="PausePanel/PanelHost"]
+z_index = -1
+tile_set = ExtResource("3_ui")
+format = 2
+layer_0/name = "wood"
+layer_0/tile_data = PackedInt32Array(0, 75, 0, 1, 65611, 0, 2, 196683, 0, 3, 196683, 0, 4, 196683, 0, 5, 196683, 0, 6, 196683, 0, 7, 327755, 0, 8, 393291, 0, 65536, 75, 1, 65537, 196683, 3, 65538, 196683, 3, 65539, 196683, 3, 65540, 196683, 3, 65541, 196683, 3, 65542, 196683, 3, 65543, 196683, 3, 65544, 393291, 1, 131072, 75, 3, 131073, 196683, 3, 131074, 196683, 3, 131075, 196683, 3, 131076, 196683, 3, 131077, 196683, 3, 131078, 196683, 3, 131079, 196683, 3, 131080, 393291, 3, 196608, 75, 3, 196609, 196683, 3, 196610, 196683, 3, 196611, 196683, 3, 196612, 196683, 3, 196613, 196683, 3, 196614, 196683, 3, 196615, 196683, 3, 196616, 393291, 3, 262144, 75, 3, 262145, 196683, 3, 262146, 196683, 3, 262147, 196683, 3, 262148, 196683, 3, 262149, 196683, 3, 262150, 196683, 3, 262151, 196683, 3, 262152, 393291, 3, 327680, 75, 3, 327681, 196683, 3, 327682, 196683, 3, 327683, 196683, 3, 327684, 196683, 3, 327685, 196683, 3, 327686, 196683, 3, 327687, 196683, 3, 327688, 393291, 3, 393216, 75, 3, 393217, 196683, 3, 393218, 196683, 3, 393219, 196683, 3, 393220, 196683, 3, 393221, 196683, 3, 393222, 196683, 3, 393223, 196683, 3, 393224, 393291, 3, 458752, 75, 3, 458753, 196683, 3, 458754, 196683, 3, 458755, 196683, 3, 458756, 196683, 3, 458757, 196683, 3, 458758, 196683, 3, 458759, 196683, 3, 458760, 393291, 3, 524288, 75, 5, 524289, 196683, 3, 524290, 196683, 3, 524291, 196683, 3, 524292, 196683, 3, 524293, 196683, 3, 524294, 196683, 3, 524295, 196683, 3, 524296, 393291, 5, 589824, 75, 6, 589825, 65611, 6, 589826, 196683, 6, 589827, 196683, 6, 589828, 196683, 6, 589829, 196683, 6, 589830, 196683, 6, 589831, 327755, 6, 589832, 393291, 6, 131057, 65545, 0, -458744, 65545, 0, -458739, 65545, 0, -458736, 65545, 0, -65515, 65545, 0)
+layer_1/name = "button"
+layer_1/tile_data = PackedInt32Array(524295, 65560, 1, 458753, 24, 0, 458759, 65560, 0, 524289, 24, 1, 524290, 131088, 4, 524291, 131088, 4, 524292, 131088, 4, 524294, 131088, 4, 524293, 131088, 4, 458754, 131088, 0, 458756, 131088, 0, 458755, 131088, 0, 458757, 131088, 0, 458758, 131088, 0, 327684, 131088, 0, 262148, 131088, 4, 393220, 131088, 4, 393219, 131088, 4, 393218, 131088, 4, 393221, 131088, 4, 393222, 131088, 4, 262146, 131088, 4, 262147, 131088, 4, 262149, 131088, 4, 262150, 131088, 4, 393217, 24, 1, 262145, 24, 1, 393223, 65560, 1, 262151, 65560, 1, 327682, 131088, 0, 327683, 131088, 0, 327685, 131088, 0, 327686, 131088, 0, 196610, 131088, 0, 196612, 131088, 0, 196611, 131088, 0, 196613, 131088, 0, 196614, 131088, 0, 196615, 65560, 0, 327687, 65560, 0, 327681, 24, 0, 196609, 24, 0)
+
+[node name="Title" type="Label" parent="PausePanel/PanelHost"]
+layout_mode = 0
+offset_left = 43.0
+offset_top = 97.0
+offset_right = 523.0
+offset_bottom = 169.0
+theme_override_colors/font_color = Color(1, 0.94, 0.82, 1)
+theme_override_colors/font_outline_color = Color(0.12, 0.08, 0.05, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 52
+text = "Paused"
+horizontal_alignment = 1
+
+[node name="ResumeButton" type="Button" parent="PausePanel/PanelHost"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 64.0
+offset_top = 192.0
+offset_right = 512.0
+offset_bottom = 320.0
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(1, 0.94, 0.82, 1)
+theme_override_colors/font_outline_color = Color(0.12, 0.08, 0.05, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = SubResource("Style_empty")
+theme_override_styles/pressed = SubResource("Style_empty")
+theme_override_styles/hover = SubResource("Style_empty")
+theme_override_styles/focus = SubResource("Style_empty")
+text = "Resume"
+flat = true
+
+[node name="SettingsButton" type="Button" parent="PausePanel/PanelHost"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 64.0
+offset_top = 320.0
+offset_right = 512.0
+offset_bottom = 448.0
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(1, 0.94, 0.82, 1)
+theme_override_colors/font_outline_color = Color(0.12, 0.08, 0.05, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = SubResource("Style_empty")
+theme_override_styles/pressed = SubResource("Style_empty")
+theme_override_styles/hover = SubResource("Style_empty")
+theme_override_styles/focus = SubResource("Style_empty")
+text = "Settings"
+flat = true
+
+[node name="MenuButton" type="Button" parent="PausePanel/PanelHost"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 64.0
+offset_top = 448.0
+offset_right = 512.0
+offset_bottom = 576.0
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(1, 0.94, 0.82, 1)
+theme_override_colors/font_outline_color = Color(0.12, 0.08, 0.05, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = SubResource("Style_empty")
+theme_override_styles/pressed = SubResource("Style_empty")
+theme_override_styles/hover = SubResource("Style_empty")
+theme_override_styles/focus = SubResource("Style_empty")
+text = "Main Menu"
+flat = true
+
+[node name="SeedLabel" type="Label" parent="PausePanel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 867.0
+offset_top = -700.0
+offset_right = 1147.0
+offset_bottom = -668.0
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.85, 0.9, 0.95, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 18
+text = "Seed: 0"
+vertical_alignment = 1
+
+[node name="LoadingOverlay" type="Control" parent="."]
+unique_name_in_owner = true
+visible = false
+z_index = 50
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BackdropHost" type="Control" parent="LoadingOverlay"]
+unique_name_in_owner = true
+clip_contents = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="WaterFill" type="ColorRect" parent="LoadingOverlay/BackdropHost"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.18, 0.55, 0.72, 1)
+
+[node name="MenuWorldBackdrop" parent="LoadingOverlay/BackdropHost" instance=ExtResource("9_backdrop")]
+unique_name_in_owner = true
+position = Vector2(-40, -20)
+scale = Vector2(1.08, 1.08)
+
+[node name="Shade" type="ColorRect" parent="LoadingOverlay/BackdropHost"]
+z_index = 20
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = -4.0
+offset_right = 12.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.04, 0.1, 0.16, 0.12)
+
+[node name="SparkA" type="ColorRect" parent="LoadingOverlay"]
+unique_name_in_owner = true
+z_index = 30
+layout_mode = 0
+offset_left = 220.0
+offset_top = 180.0
+offset_right = 228.0
+offset_bottom = 188.0
+mouse_filter = 2
+color = Color(1, 0.9, 0.45, 0.85)
+
+[node name="SparkB" type="ColorRect" parent="LoadingOverlay"]
+unique_name_in_owner = true
+z_index = 30
+layout_mode = 0
+offset_left = 1500.0
+offset_top = 420.0
+offset_right = 1508.0
+offset_bottom = 428.0
+mouse_filter = 2
+color = Color(1, 0.95, 0.7, 0.7)
+
+[node name="SparkC" type="ColorRect" parent="LoadingOverlay"]
+unique_name_in_owner = true
+z_index = 30
+layout_mode = 0
+offset_left = 980.0
+offset_top = 760.0
+offset_right = 986.0
+offset_bottom = 766.0
+mouse_filter = 2
+color = Color(0.7, 0.9, 1, 0.75)
+
+[node name="LoadingPanel" type="Control" parent="LoadingOverlay"]
+unique_name_in_owner = true
+z_index = 40
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -256.0
+offset_top = -192.0
+offset_right = 256.0
+offset_bottom = 192.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(256, 192)
+
+[node name="FrameTiles" type="TileMap" parent="LoadingOverlay/LoadingPanel"]
+z_index = -1
+tile_set = ExtResource("3_ui")
+format = 2
+layer_0/name = "wood"
+layer_0/tile_data = PackedInt32Array(0, 75, 0, 1, 65611, 0, 2, 196683, 0, 3, 196683, 0, 4, 196683, 0, 5, 196683, 0, 6, 327755, 0, 7, 393291, 0, 65536, 75, 1, 65537, 196683, 3, 65538, 196683, 3, 65539, 196683, 3, 65540, 196683, 3, 65541, 196683, 3, 65542, 196683, 3, 65543, 393291, 1, 131072, 75, 3, 131073, 196683, 3, 131074, 196683, 3, 131075, 196683, 3, 131076, 196683, 3, 131077, 196683, 3, 131078, 196683, 3, 131079, 393291, 3, 196608, 75, 3, 196609, 196683, 3, 196610, 196683, 3, 196611, 196683, 3, 196612, 196683, 3, 196613, 196683, 3, 196614, 196683, 3, 196615, 393291, 3, 262144, 75, 5, 262145, 196683, 3, 262146, 196683, 3, 262147, 196683, 3, 262148, 196683, 3, 262149, 196683, 3, 262150, 196683, 3, 262151, 393291, 5, 327680, 75, 6, 327681, 65611, 6, 327682, 196683, 6, 327683, 65545, 0, 327684, 196683, 6, 327685, 196683, 6, 327686, 327755, 6, 327687, 393291, 6)
+
+[node name="Logo" type="TextureRect" parent="LoadingOverlay/LoadingPanel"]
+layout_mode = 0
+offset_left = 58.0
+offset_top = -287.0
+offset_right = 454.0
+offset_bottom = -37.0
+mouse_filter = 2
+texture = ExtResource("7_logo")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="LoadingTitle" type="Label" parent="LoadingOverlay/LoadingPanel"]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 112.0
+offset_right = 472.0
+offset_bottom = 152.0
+theme_override_colors/font_color = Color(1, 0.94, 0.82, 1)
+theme_override_colors/font_outline_color = Color(0.12, 0.08, 0.05, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 30
+text = "Forging the realm"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LoadingStatus" type="Label" parent="LoadingOverlay/LoadingPanel"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 40.0
+offset_top = 156.0
+offset_right = 472.0
+offset_bottom = 192.0
+theme_override_colors/font_color = Color(0.92, 0.86, 0.72, 1)
+theme_override_colors/font_outline_color = Color(0.12, 0.08, 0.05, 1)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 20
+text = "Building terrain…"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BarBase" type="TileMap" parent="LoadingOverlay/LoadingPanel"]
+position = Vector2(96, 220)
+tile_set = ExtResource("3_ui")
+format = 2
+layer_0/name = "base"
+layer_0/tile_data = PackedInt32Array(0, 9, 0, 1, 131081, 0, 2, 131081, 0, 3, 131081, 0, 4, 262153, 0)
+
+[node name="LoadingFillClip" type="Control" parent="LoadingOverlay/LoadingPanel"]
+unique_name_in_owner = true
+clip_contents = true
+anchors_preset = 0
+offset_left = 144.0
+offset_top = 238.0
+offset_right = 368.0
+offset_bottom = 266.0
+mouse_filter = 2
+
+[node name="FillTiles" type="TileMap" parent="LoadingOverlay/LoadingPanel/LoadingFillClip"]
+position = Vector2(-48, -18)
+tile_set = ExtResource("3_ui")
+format = 2
+layer_0/name = "fill"
+layer_0/tile_data = PackedInt32Array(0, 10, 0, 1, 10, 0, 2, 10, 0, 3, 10, 0, 4, 10, 0)
+
+[node name="LoadingPercent" type="Label" parent="LoadingOverlay/LoadingPanel"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 144.0
+offset_top = 234.0
+offset_right = 368.0
+offset_bottom = 270.0
+theme_override_colors/font_color = Color(1, 0.96, 0.9, 1)
+theme_override_colors/font_outline_color = Color(0.18, 0.08, 0.05, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 18
+text = "0%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LoadingSword" type="TextureRect" parent="LoadingOverlay/LoadingPanel"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 96.0
+offset_top = 292.0
+offset_right = 416.0
+offset_bottom = 356.0
+pivot_offset = Vector2(160, 32)
+mouse_filter = 2
+texture = ExtResource("8_sword")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="LoadingSword2" type="TextureRect" parent="LoadingOverlay/LoadingPanel/LoadingSword"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 1.0
+offset_top = 63.0
+offset_right = 321.0
+offset_bottom = 127.0
+pivot_offset = Vector2(160, 32)
+mouse_filter = 2
+texture = ExtResource("8_sword")
+expand_mode = 1
+stretch_mode = 5
+flip_v = true
+
+[node name="HealthPanel" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 171.0
+offset_top = 57.0
+offset_right = 491.0
+offset_bottom = 121.0
+mouse_filter = 2
+
+[node name="BaseTiles" type="TileMap" parent="HealthPanel"]
+z_index = -1
+texture_filter = 1
+tile_set = ExtResource("3_ui")
+format = 2
+layer_0/name = "base"
+layer_0/tile_data = PackedInt32Array(0, 9, 0, 1, 131081, 0, 2, 131081, 0, 3, 131081, 0, 4, 262153, 0)
+
+[node name="HealthFillClip" type="Control" parent="HealthPanel"]
+unique_name_in_owner = true
+clip_contents = true
+anchors_preset = 0
+offset_left = 48.0
+offset_top = 18.0
+offset_right = 272.0
+offset_bottom = 46.0
+mouse_filter = 2
+
+[node name="FillTiles" type="TileMap" parent="HealthPanel/HealthFillClip"]
+texture_filter = 1
+position = Vector2(-48, -18)
+tile_set = ExtResource("3_ui")
+format = 2
+layer_0/name = "fill"
+layer_0/tile_data = PackedInt32Array(0, 10, 0, 1, 10, 0, 2, 10, 0, 3, 10, 0, 4, 10, 0)
+
+[node name="HealthLabel" type="Label" parent="HealthPanel"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 49.0
+offset_top = 14.0
+offset_right = 271.0
+offset_bottom = 50.0
+theme_override_colors/font_color = Color(1, 0.96, 0.9, 1)
+theme_override_colors/font_outline_color = Color(0.18, 0.08, 0.05, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 20
+text = "100 / 100"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="avatar" type="Sprite2D" parent="HealthPanel"]
+position = Vector2(-76, 34)
+texture = ExtResource("5_acb04")

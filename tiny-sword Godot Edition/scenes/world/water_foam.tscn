@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="SpriteFrames" path="res://resources/terrain/water_foam_frames.tres" id="1_frames"]
+
+[node name="WaterFoam" type="AnimatedSprite2D"]
+sprite_frames = ExtResource("1_frames")
+animation = &"foam"
+autoplay = "foam"
+centered = true
